@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WebNothing.Data.Context;
+using WebNothing.IoC;
 
 namespace WebNothing
 {
@@ -24,6 +25,9 @@ namespace WebNothing
         {
             services.AddControllersWithViews();
 
+            NativeInjector.RegisterServices(services);
+
+            //Database connection
             services.AddDbContext<WebNothingContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("DatabaseDefault")).EnableSensitiveDataLogging());
 
             // In production, the Angular files will be served from this directory

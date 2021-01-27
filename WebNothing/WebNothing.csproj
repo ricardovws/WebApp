@@ -31,7 +31,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\WebNothing.Application\WebNothing.Application.csproj" />
     <ProjectReference Include="..\WebNothing.Data\WebNothing.Data.csproj" />
+    <ProjectReference Include="..\WebNothing.IoC\WebNothing.IoC.csproj" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
