@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using WebNothing.Domain.Models;
 
-namespace WebNothing.Domain.Entities
+namespace WebNothing.Application.ViewModels
 {
-    public class User : Entity
+    public class UserViewModel
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
+
     }
 }

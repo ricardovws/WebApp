@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WebNothing.Application\WebNothing.Application.csproj" />
+    <ProjectReference Include="..\WebNothing.Data\WebNothing.Data.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using WebNothing.Application.ViewModels;
 
 namespace WebNothing.Application.Interfaces
 {
     public interface IUserService
     {
-        void Test();
-    }
+        List<UserViewModel> Get();
+    }   
 }

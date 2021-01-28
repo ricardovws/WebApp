@@ -12,7 +12,7 @@ namespace WebNothing.Data.Extensions
         {
             builder.Entity<User>()
                 .HasData(
-                    new User { Id = 1, Name = "User Default", Email = "user@user.com" }
+                    new User { Id = 1, Name = "User Default", Email = "user@user.com", DateCreated = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Hour), IsDeleted = false, DateUpdated = null }
                 );
 
             return builder;
