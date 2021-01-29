@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -6,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WebNothing.Application.AutoMapper;
 using WebNothing.Data.Context;
 using WebNothing.IoC;
 
@@ -26,6 +28,8 @@ namespace WebNothing
             services.AddControllersWithViews();
 
             NativeInjector.RegisterServices(services);
+
+            services.AddAutoMapper(typeof(AutoMapperSetup));
 
             //Database connection
             services.AddDbContext<WebNothingContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("DatabaseDefault")).EnableSensitiveDataLogging());

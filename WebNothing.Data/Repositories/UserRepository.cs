@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using WebNothing.Data.Context;
 using WebNothing.Domain.Entities;
@@ -16,5 +17,10 @@ namespace WebNothing.Data.Repositories
         {
             return Query(x => !x.IsDeleted);
         }
+
+        //public int GetNewId()
+        //{
+        //    return GetAll().Count() + 1;
+        //}
     }
 }

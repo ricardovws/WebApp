@@ -8,5 +8,6 @@ namespace WebNothing.Application.Interfaces
     public interface IUserService
     {
         List<UserViewModel> Get();
+        bool Post(UserViewModel userViewModel);
     }   
 }

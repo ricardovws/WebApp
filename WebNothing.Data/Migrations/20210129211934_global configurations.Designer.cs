@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebNothing.Data.Context;
 
 namespace WebNothing.Data.Migrations
 {
     [DbContext(typeof(WebNothingContext))]
-    partial class WebNothingContextModelSnapshot : ModelSnapshot
+    [Migration("20210129211934_global configurations")]
+    partial class globalconfigurations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,7 +29,9 @@ namespace WebNothing.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2021, 1, 29, 18, 19, 34, 134, DateTimeKind.Local).AddTicks(8242));
 
                     b.Property<DateTime?>("DateUpdated")
                         .HasColumnType("datetime2");

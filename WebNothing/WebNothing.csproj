@@ -13,6 +13,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.5">
@@ -32,7 +34,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WebNothing.Application\WebNothing.Application.csproj" />
-    <ProjectReference Include="..\WebNothing.Data\WebNothing.Data.csproj" />
     <ProjectReference Include="..\WebNothing.IoC\WebNothing.IoC.csproj" />
   </ItemGroup>
 
