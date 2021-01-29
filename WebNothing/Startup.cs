@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using WebNothing.Application.AutoMapper;
 using WebNothing.Data.Context;
 using WebNothing.IoC;
+using WebNothing.Swagger;
 
 namespace WebNothing
 {
@@ -30,6 +31,8 @@ namespace WebNothing
             NativeInjector.RegisterServices(services);
 
             services.AddAutoMapper(typeof(AutoMapperSetup));
+
+            services.AddSwaggerConfiguration();
 
             //Database connection
             services.AddDbContext<WebNothingContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("DatabaseDefault")).EnableSensitiveDataLogging());
@@ -54,6 +57,8 @@ namespace WebNothing
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.UseSwaggerConfiguration();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
