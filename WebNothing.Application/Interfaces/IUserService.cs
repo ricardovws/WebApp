@@ -9,5 +9,7 @@ namespace WebNothing.Application.Interfaces
     {
         List<UserViewModel> Get();
         bool Post(UserViewModel userViewModel);
+        UserViewModel GetById(int id);
+        bool Put(UserViewModel userViewModel);
     }   
 }
