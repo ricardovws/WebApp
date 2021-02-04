@@ -31,7 +31,10 @@ namespace WebNothing.Application.Services
 
         public bool Post(UserViewModel userViewModel)
         {
-          
+
+            if (userViewModel.Id != 0)
+                throw new Exception("UserID must be zero or empty");
+            
             User _user = mapper.Map<User>(userViewModel);
 
             _user.DateCreated = DateTime.Now;
@@ -78,9 +81,12 @@ namespace WebNothing.Application.Services
 
         public UserAuthenticateResponseViewModel Authenticate(UserAuthenticateRequestViewModel user)
         {
+            if (string.IsNullOrEmpty(user.Email) || string.IsNullOrEmpty(user.Password)) 
+                throw new Exception("Email/Password are required.");
+
             User _user = this.userRepository.Find(x => !x.IsDeleted && x.Email.ToLower() == user.Email.ToLower());
             if (_user == null)
-                throw new Exception("User now found");
+                throw new Exception("User not found");
 
             return new UserAuthenticateResponseViewModel(mapper.Map<UserViewModel>(_user), TokenService.GenerateToken(_user));
         }
