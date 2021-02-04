@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using WebNothing.Application.Interfaces;
 using WebNothing.Application.ViewModels;
+using WebNothing.Auth.Services;
 using WebNothing.Domain.Entities;
 using WebNothing.Domain.Interfaces;
 
@@ -65,5 +66,23 @@ namespace WebNothing.Application.Services
             return true;
         }
 
+        public bool Delete(int id)
+        {
+            User _user = this.userRepository.Find(x => x.Id == id && !x.IsDeleted);
+
+            if (_user == null)
+                throw new Exception("User not found");
+
+            return this.userRepository.Delete(_user); 
+        }
+
+        public UserAuthenticateResponseViewModel Authenticate(UserAuthenticateRequestViewModel user)
+        {
+            User _user = this.userRepository.Find(x => !x.IsDeleted && x.Email.ToLower() == user.Email.ToLower());
+            if (_user == null)
+                throw new Exception("User now found");
+
+            return new UserAuthenticateResponseViewModel(mapper.Map<UserViewModel>(_user), TokenService.GenerateToken(_user));
+        }
     }
 }

@@ -11,5 +11,9 @@ namespace WebNothing.Application.Interfaces
         bool Post(UserViewModel userViewModel);
         UserViewModel GetById(int id);
         bool Put(UserViewModel userViewModel);
+
+        public bool Delete(int id);
+
+        UserAuthenticateResponseViewModel Authenticate(UserAuthenticateRequestViewModel user);
     }   
 }

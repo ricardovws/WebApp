@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebNothing.Application.Interfaces;
 using WebNothing.Application.ViewModels;
+using WebNothing.Auth.Services;
 
 namespace WebNothing.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
+    [ApiController, Authorize]
     public class UsersController : ControllerBase
     {
         private readonly IUserService userService;
@@ -26,7 +29,7 @@ namespace WebNothing.Controllers
             return Ok(this.userService.Get());
         }
 
-        [HttpPost]
+        [HttpPost, AllowAnonymous]
         public IActionResult Post(UserViewModel userViewModel)
         {
             return Ok(this.userService.Post(userViewModel));
@@ -42,6 +45,20 @@ namespace WebNothing.Controllers
         public IActionResult Put(UserViewModel userViewModel)
         {
             return Ok(this.userService.Put(userViewModel));
+        }
+
+        [HttpDelete]
+        public IActionResult Delete()
+        {
+            int _userId = int.Parse(TokenService.GetValueFromClaim(HttpContext.User.Identity, ClaimTypes.NameIdentifier));
+
+            return Ok(this.userService.Delete(_userId));
+        }
+
+        [HttpPost("authenticate"), AllowAnonymous]
+        public IActionResult Authenticate(UserAuthenticateRequestViewModel userViewModel)
+        {
+            return Ok(this.userService.Authenticate(userViewModel));
         }
     }
 }

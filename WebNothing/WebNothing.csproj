@@ -34,6 +34,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WebNothing.Application\WebNothing.Application.csproj" />
+    <ProjectReference Include="..\WebNothing.Auth\WebNothing.Auth.csproj" />
     <ProjectReference Include="..\WebNothing.IoC\WebNothing.IoC.csproj" />
     <ProjectReference Include="..\WebNothing.Swagger\WebNothing.Swagger.csproj" />
   </ItemGroup>
