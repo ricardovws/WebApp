@@ -32,6 +32,10 @@ namespace WebNothing.Controllers
         [HttpPost, AllowAnonymous]
         public IActionResult Post(UserViewModel userViewModel)
         {
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             return Ok(this.userService.Post(userViewModel));
         }
 
