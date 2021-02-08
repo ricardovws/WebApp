@@ -44,7 +44,7 @@ namespace WebNothing.Application.Services
 
             _user.DateCreated = DateTime.Now;
 
-            _user.Password = EncryptPassword(_user.Password);
+            //_user.Password = EncryptPassword(_user.Password);
 
             this.userRepository.Create(_user);
 
