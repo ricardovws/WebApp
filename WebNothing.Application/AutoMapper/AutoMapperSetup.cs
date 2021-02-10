@@ -19,7 +19,9 @@ namespace WebNothing.Application.AutoMapper
 
             #region DomainToViewModel
 
-            CreateMap<User, UserViewModel>();
+            CreateMap<User, UserViewModel>()
+                //ignore password when push this data to frontend!
+                .ForMember(dest => dest.Password, act => act.Ignore());
 
             #endregion
         }

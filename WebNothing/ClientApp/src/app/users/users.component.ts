@@ -12,10 +12,14 @@ export class UsersComponent implements OnInit {
   user: any = {};
   showList: boolean = true;
 
+  userLogin: any = {};
+  isAuthenticated: boolean = false;
+  userLogged: any = {};
+
   constructor(private userDataService: UserDataService) { }
 
   ngOnInit() {
-    this.get();
+    
   }
 
   get() {
@@ -26,6 +30,14 @@ export class UsersComponent implements OnInit {
         console.log(error);
         alert('internal error!');
     })
+  }
+
+  save() {
+    if (this.user.id) {
+      this.put()
+    } else {
+      this.post()
+    }
   }
 
   post() {
@@ -42,5 +54,61 @@ export class UsersComponent implements OnInit {
         alert('internal error!');
     })
   }
+
+  put() {
+    this.userDataService.put(this.user).subscribe(data => {
+      if (data) {
+        alert('The user has been updated!');
+        this.get();
+        this.user = {};
+      } else {
+        alert('Error! This user cannot be updated!');
+      }
+    }, error => {
+      console.log(error);
+      alert('internal error!');
+    })
+  }
+
+  openDetails(user) {
+    this.showList = false;
+    this.user = user;
+  }
+
+  delete(user) {
+    this.userDataService.delete().subscribe(data => {
+      if (data) {
+        alert('The user has been deleted!');
+        this.get();
+        this.user = {};
+      } else {
+        alert('Error! This user cannot be deleted!');
+      }
+    }, error => {
+      console.log(error);
+      alert('internal error!');
+    })
+  }
+
+  authenticate() {
+    this.userDataService.authenticate(this.userLogin).subscribe((data:any) => {
+      if (data.user) {
+        localStorage.setItem('user_logged', JSON.stringify(data));
+        this.get();
+        this.getUserData();
+      } else {
+        alert('Error! This user cannot be logged!');
+      }
+    }, error => {
+      console.log(error);
+      alert('User invalid!');
+    })
+  }
+
+  getUserData() {
+    this.userLogged = JSON.parse(localStorage.getItem('user_logged'));
+    this.isAuthenticated = this.userLogged != null;
+  }
+
 
 }
