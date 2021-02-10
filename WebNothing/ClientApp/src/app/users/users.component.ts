@@ -18,10 +18,6 @@ export class UsersComponent implements OnInit {
 
   constructor(private userDataService: UserDataService) { }
 
-  ngOnInit() {
-    
-  }
-
   get() {
     this.userDataService.get().subscribe((data:any[]) => {
       this.users = data;
@@ -110,5 +106,18 @@ export class UsersComponent implements OnInit {
     this.isAuthenticated = this.userLogged != null;
   }
 
+  verifyAuthentication() {
+    this.userDataService.isAuthenticated().subscribe((data: any) => {
+      if (data) {
+        this.get();
+        this.getUserData();
+      } 
+    })
+  }
 
+  ngOnInit() {
+
+    this.verifyAuthentication();
+
+  }
 }

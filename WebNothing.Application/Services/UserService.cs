@@ -103,6 +103,11 @@ namespace WebNothing.Application.Services
             return new UserAuthenticateResponseViewModel(mapper.Map<UserViewModel>(_user), TokenService.GenerateToken(_user));
         }
 
+        public bool IsAuthenticated()
+        {
+            return true;
+        }
+
         private string EncryptPassword(string password)
         {
             HashAlgorithm sha = new SHA1CryptoServiceProvider();

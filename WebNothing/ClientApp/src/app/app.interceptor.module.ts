@@ -4,7 +4,7 @@ import { Observable } from "rxjs";
 
 @Injectable()
 export class HttpsRequestInterceptor implements HttpInterceptor {
-
+  
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler,
@@ -12,7 +12,7 @@ export class HttpsRequestInterceptor implements HttpInterceptor {
     var _user = JSON.parse(localStorage.getItem('user_logged'));
 
     const duqReq = req.clone({
-      headers: req.headers.set('authorization', (_user && _user.token) ? 'Bearer ' + _user.token : ''),
+      headers: req.headers.set('Authorization', (_user && _user.token) ? 'Bearer ' + _user.token : ''),
   });
     return next.handle(duqReq);
   }

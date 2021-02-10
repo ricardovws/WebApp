@@ -1,32 +1,45 @@
 
 <p *ngIf="isAuthenticated">Welcome {{userLogged?.user?.name}}!</p>
-<button class="btn-primary" (click)="showList = !showList">{{showList ? 'New user' : 'User List'}}</button>
-<p *ngIf="isAuthenticated">Users ({{users?.length}})</p>
-<div *ngIf="showList">
-  <div *ngIf="isAuthenticated">
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">Actions</th>
-          <th scope="col">ID</th>
-          <th scope="col">Name</th>
-          <th scope="col">Email</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let user of users">
-          <th scope="row">
-            <button class="btn-primary btn" (click)="openDetails(user)">Edit</button>
-            <button class="btn-danger btn" (click)="delete(user)">Delete</button>
-          </th>
-          <th scope="row">{{user.id}}</th>
-          <td scope="row">{{user.name}}</td>
-          <td scope="row">{{user.email}}</td>
-        </tr>
-      </tbody>
-    </table>
+
+<div class="btn-toolbar justify-content-between" role="toolbar">
+  <div class="btn-group" role="group">
+    <button type="button" class="btn btn-primary" (click)="showList = !showList">{{showList ? 'New user' : 'User List'}}</button>
+  </div>
+
+  <div *ngIf="isAuthenticated" class="input-group">
+    <div class="input-group-prepend">
+      <div class="input-group-text" id="btnGroupAddon2">@</div>
+    </div>
+    <input type="text" class="form-control" placeholder="Input group example" aria-label="Input group example" aria-describedby="btnGroupAddon2">
   </div>
 </div>
+  <p></p>
+  <p *ngIf="isAuthenticated">Users ({{users?.length}})</p>
+  <div *ngIf="showList">
+    <div *ngIf="isAuthenticated">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Actions</th>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users">
+            <th scope="row">
+              <button class="btn-primary btn" (click)="openDetails(user)">Edit</button>
+              <button class="btn-danger btn" (click)="delete(user)">Delete</button>
+            </th>
+            <th scope="row">{{user.id}}</th>
+            <td scope="row">{{user.name}}</td>
+            <td scope="row">{{user.email}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
   <div *ngIf="!showList">
     <form>
@@ -47,20 +60,20 @@
       <button type="submit" class="btn btn-primary" (click)="save()">Save</button>
     </form>
   </div>
-  
 
-<div *ngIf="!isAuthenticated && showList">
-  <form>
-    <div class="mb-3">
-      <label for="exampleInputEmail" class="form-label">Email:</label>
-      <input type="email" class="form-control" id="exampleInputEmail" placeholder="Email"
-             [(ngModel)]="userLogin.email" name="email">
-    </div>
-    <div class="mb-3">
-      <label for="exampleInputPassword" class="form-label">Password:</label>
-      <input type="password" class="form-control" id="exampleInputPassword" placeholder="Password"
-             [(ngModel)]="userLogin.password" name="password">
-    </div>
-    <button type="submit" class="btn btn-primary" (click)="authenticate()">Login</button>
-  </form>
-</div>
+
+  <div *ngIf="!isAuthenticated && showList">
+    <form>
+      <div class="mb-3">
+        <label for="exampleInputEmail" class="form-label">Email:</label>
+        <input type="email" class="form-control" id="exampleInputEmail" placeholder="Email"
+               [(ngModel)]="userLogin.email" name="email">
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputPassword" class="form-label">Password:</label>
+        <input type="password" class="form-control" id="exampleInputPassword" placeholder="Password"
+               [(ngModel)]="userLogin.password" name="password">
+      </div>
+      <button type="submit" class="btn btn-primary" (click)="authenticate()">Login</button>
+    </form>
+  </div>

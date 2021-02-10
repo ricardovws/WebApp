@@ -19,7 +19,7 @@ namespace WebNothing.Controllers
             this.userService = userService;
         }
 
-        [HttpGet, AllowAnonymous]
+        [HttpGet]
         public IActionResult Get()
         {
             return Ok(this.userService.Get());
@@ -59,6 +59,12 @@ namespace WebNothing.Controllers
         public IActionResult Authenticate(UserAuthenticateRequestViewModel userViewModel)
         {
             return Ok(this.userService.Authenticate(userViewModel));
+        }
+
+        [HttpGet("authenticate")]
+        public IActionResult IsAuthenticated()
+        {
+            return Ok(this.userService.IsAuthenticated());
         }
     }
 }

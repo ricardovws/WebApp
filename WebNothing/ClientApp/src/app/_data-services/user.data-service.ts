@@ -28,4 +28,7 @@ export class UserDataService {
     return this.http.post(this.module + '/authenticate', data);
   }
 
+  isAuthenticated() {
+    return this.http.get(this.module + '/authenticate');
+  }
 }

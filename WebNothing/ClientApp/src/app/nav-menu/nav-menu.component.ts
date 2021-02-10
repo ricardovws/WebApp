@@ -15,4 +15,9 @@ export class NavMenuComponent {
   toggle() {
     this.isExpanded = !this.isExpanded;
   }
+
+  logOut() {
+    localStorage.removeItem('user_logged');
+    window.location.reload();
+  }
 }
