@@ -1,5 +1,7 @@
 
-<p *ngIf="isAuthenticated">Welcome {{userLogged?.user?.name}}!</p>
+<!--<app-auth *ngIf="!isAuthenticated">Welcome!!!!!!!!!</app-auth>-->
+
+<!--<p *ngIf="isAuthenticated">Welcome {{userLogged?.user?.name}}!</p>
 
 <div class="btn-toolbar justify-content-between" role="toolbar">
   <div class="btn-group" role="group">
@@ -59,21 +61,5 @@
       </div>
       <button type="submit" class="btn btn-primary" (click)="save()">Save</button>
     </form>
-  </div>
+  </div>-->
 
-
-  <div *ngIf="!isAuthenticated && showList">
-    <form>
-      <div class="mb-3">
-        <label for="exampleInputEmail" class="form-label">Email:</label>
-        <input type="email" class="form-control" id="exampleInputEmail" placeholder="Email"
-               [(ngModel)]="userLogin.email" name="email">
-      </div>
-      <div class="mb-3">
-        <label for="exampleInputPassword" class="form-label">Password:</label>
-        <input type="password" class="form-control" id="exampleInputPassword" placeholder="Password"
-               [(ngModel)]="userLogin.password" name="password">
-      </div>
-      <button type="submit" class="btn btn-primary" (click)="authenticate()">Login</button>
-    </form>
-  </div>

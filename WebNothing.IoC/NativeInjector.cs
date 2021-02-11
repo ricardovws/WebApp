@@ -13,12 +13,12 @@ namespace WebNothing.IoC
         {
             #region Services
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IAuthService, AuthService>();
             #endregion
 
             #region Repositories
             services.AddScoped<IUserRepository, UserRepository>();
             #endregion
-
         }
     }
 }

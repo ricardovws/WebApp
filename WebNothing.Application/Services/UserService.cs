@@ -18,10 +18,13 @@ namespace WebNothing.Application.Services
         private readonly IUserRepository userRepository;
 
         private readonly IMapper mapper;
-        public UserService(IUserRepository userRepository, IMapper mapper)
+
+        private readonly IAuthService authService;
+        public UserService(IUserRepository userRepository, IMapper mapper, IAuthService authService)
         {
             this.userRepository = userRepository;
             this.mapper = mapper;
+            this.authService = authService;
         }
         public List<UserViewModel> Get()
         {
@@ -44,7 +47,7 @@ namespace WebNothing.Application.Services
 
             _user.DateCreated = DateTime.Now;
 
-            _user.Password = EncryptPassword(_user.Password);
+            _user.Password = authService.EncryptPassword(_user.Password);
 
             this.userRepository.Create(_user);
 
@@ -71,7 +74,7 @@ namespace WebNothing.Application.Services
 
             _user = mapper.Map<User>(userViewModel);
 
-            _user.Password = EncryptPassword(_user.Password);
+            _user.Password = authService.EncryptPassword(_user.Password);
 
             this.userRepository.Update(_user);
 
@@ -86,42 +89,6 @@ namespace WebNothing.Application.Services
                 throw new Exception("User not found");
 
             return this.userRepository.Delete(_user); 
-        }
-
-        public UserAuthenticateResponseViewModel Authenticate(UserAuthenticateRequestViewModel user)
-        {
-            if (string.IsNullOrEmpty(user.Email) || string.IsNullOrEmpty(user.Password)) 
-                throw new Exception("Email/Password are required.");
-
-            user.Password = EncryptPassword(user.Password);
-
-
-            User _user = this.userRepository.Find(x => !x.IsDeleted && x.Email.ToLower() == user.Email.ToLower() && x.Password.ToLower() == user.Password.ToLower());
-            if (_user == null)
-                throw new Exception("User not found");
-
-            return new UserAuthenticateResponseViewModel(mapper.Map<UserViewModel>(_user), TokenService.GenerateToken(_user));
-        }
-
-        public bool IsAuthenticated()
-        {
-            return true;
-        }
-
-        private string EncryptPassword(string password)
-        {
-            HashAlgorithm sha = new SHA1CryptoServiceProvider();
-
-            byte[] encryptedPassword = sha.ComputeHash(Encoding.UTF8.GetBytes(password));
-
-            StringBuilder stringBuilder = new StringBuilder();
-
-            foreach (var caracter in encryptedPassword)
-            {
-                stringBuilder.Append(caracter.ToString("X2"));
-            }
-
-            return stringBuilder.ToString();
         }
     }
 }

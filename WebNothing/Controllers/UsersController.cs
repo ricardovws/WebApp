@@ -25,6 +25,14 @@ namespace WebNothing.Controllers
             return Ok(this.userService.Get());
         }
 
+        [HttpGet("test")]
+        [Authorize(Roles = "fullAdmin")]
+        public IActionResult Test()
+        {
+            return Ok(true);
+        }
+
+
         [HttpPost, AllowAnonymous]
         public IActionResult Post(UserViewModel userViewModel)
         {
@@ -55,16 +63,5 @@ namespace WebNothing.Controllers
             return Ok(this.userService.Delete(_userId));
         }
 
-        [HttpPost("authenticate"), AllowAnonymous]
-        public IActionResult Authenticate(UserAuthenticateRequestViewModel userViewModel)
-        {
-            return Ok(this.userService.Authenticate(userViewModel));
-        }
-
-        [HttpGet("authenticate")]
-        public IActionResult IsAuthenticated()
-        {
-            return Ok(this.userService.IsAuthenticated());
-        }
     }
 }

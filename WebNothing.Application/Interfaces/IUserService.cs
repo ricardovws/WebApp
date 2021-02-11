@@ -13,9 +13,5 @@ namespace WebNothing.Application.Interfaces
         bool Put(UserViewModel userViewModel);
 
         public bool Delete(int id);
-
-        UserAuthenticateResponseViewModel Authenticate(UserAuthenticateRequestViewModel user);
-
-        bool IsAuthenticated();
     }   
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserDataService } from '../_data-services/user.data-service';
+import { AuthDataService } from '../_data-services/auth.data-service';
 
 @Component({
   selector: 'app-users',
@@ -16,7 +17,7 @@ export class UsersComponent implements OnInit {
   isAuthenticated: boolean = false;
   userLogged: any = {};
 
-  constructor(private userDataService: UserDataService) { }
+  constructor(private userDataService: UserDataService, private authDataService: AuthDataService) { }
 
   get() {
     this.userDataService.get().subscribe((data:any[]) => {
@@ -86,38 +87,7 @@ export class UsersComponent implements OnInit {
     })
   }
 
-  authenticate() {
-    this.userDataService.authenticate(this.userLogin).subscribe((data:any) => {
-      if (data.user) {
-        localStorage.setItem('user_logged', JSON.stringify(data));
-        this.get();
-        this.getUserData();
-      } else {
-        alert('Error! This user cannot be logged!');
-      }
-    }, error => {
-      console.log(error);
-      alert('User invalid!');
-    })
-  }
-
-  getUserData() {
-    this.userLogged = JSON.parse(localStorage.getItem('user_logged'));
-    this.isAuthenticated = this.userLogged != null;
-  }
-
-  verifyAuthentication() {
-    this.userDataService.isAuthenticated().subscribe((data: any) => {
-      if (data) {
-        this.get();
-        this.getUserData();
-      } 
-    })
-  }
-
   ngOnInit() {
-
-    this.verifyAuthentication();
-
+    
   }
 }

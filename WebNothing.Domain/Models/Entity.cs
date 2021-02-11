@@ -4,7 +4,7 @@ using System.Text;
 
 namespace WebNothing.Domain.Models
 {
-    public class Entity
+    public abstract class Entity
     {
         public int Id { get; set; }
         public DateTime DateCreated { get; set; }
