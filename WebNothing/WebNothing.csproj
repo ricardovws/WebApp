@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -33,6 +33,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\__models\userLoggedData.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\WebNothing.Application\WebNothing.Application.csproj" />
     <ProjectReference Include="..\WebNothing.Auth\WebNothing.Auth.csproj" />
     <ProjectReference Include="..\WebNothing.IoC\WebNothing.IoC.csproj" />
@@ -41,6 +45,10 @@
 
   <ItemGroup>
     <Folder Include="ClientApp\src\app\auth\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\__models\userLoggedData.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

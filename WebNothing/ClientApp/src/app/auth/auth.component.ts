@@ -1,24 +1,29 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthDataService } from '../_data-services/auth.data-service';
+import { userLoggedData } from '../__models/userLoggedData';
 
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
-  styleUrls: ['./auth.component.css']
+  styleUrls: ['./auth.component.css'],
+  providers: [userLoggedData]
 })
 export class AuthComponent implements OnInit {
 
-  constructor(private authDataService: AuthDataService) { }
+  public model: userLoggedData;
 
-  userLogin: any = {};
-  isAuthenticated: boolean = false;
-  userLogged: any = {};
+  constructor(private authDataService: AuthDataService) {
 
+    this.model = new userLoggedData();
+
+  }
   authenticate() {
-    this.authDataService.authenticate(this.userLogin).subscribe((data: any) => {
+    this.authDataService.authenticate(this.model.userLogin).subscribe((data: any) => {
       if (data.user) {
         localStorage.setItem('user_logged', JSON.stringify(data));
-        this.getUserData();
+        this.model = this.authDataService.getUserData();
+        this.cleanUserLoginDataScreen();
+
       } else {
         alert('Error! This user cannot be logged!');
       }
@@ -28,16 +33,13 @@ export class AuthComponent implements OnInit {
     })
   }
 
-  getUserData() {
-    this.userLogged = JSON.parse(localStorage.getItem('user_logged'));
-    this.isAuthenticated = this.userLogged != null;
-  }
-
-  clickMe() {
-    alert('fui clicado!')
+  cleanUserLoginDataScreen() {
+    this.model.userLogin.email = '';
+    this.model.userLogin.password = '';
   }
 
   ngOnInit() {
+    this.authDataService.isAuthenticated();
+    this.model = this.authDataService.getUserData();
   }
-
 }

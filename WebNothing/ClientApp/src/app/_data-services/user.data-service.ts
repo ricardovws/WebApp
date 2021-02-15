@@ -20,15 +20,7 @@ export class UserDataService {
     return this.http.put(this.module, data);
   }
 
-  delete() {
-    return this.http.delete(this.module);
-  }
-
-  authenticate(data) {
-    return this.http.post(this.module + '/authenticate', data);
-  }
-
-  isAuthenticated() {
-    return this.http.get(this.module + '/authenticate');
+  delete(data) {
+    return this.http.delete(this.module + '/' + data);
   }
 }

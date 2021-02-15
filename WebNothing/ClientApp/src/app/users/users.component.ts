@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { UserDataService } from '../_data-services/user.data-service';
 import { AuthDataService } from '../_data-services/auth.data-service';
+import { userLoggedData } from '../__models/userLoggedData';
+//import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
-  styleUrls: ['./users.component.css']
+  styleUrls: ['./users.component.css'],
+  providers: [userLoggedData]
 })
 export class UsersComponent implements OnInit {
 
@@ -13,21 +16,26 @@ export class UsersComponent implements OnInit {
   user: any = {};
   showList: boolean = true;
 
-  userLogin: any = {};
-  isAuthenticated: boolean = false;
-  userLogged: any = {};
+  editModal: boolean = false;
 
-  constructor(private userDataService: UserDataService, private authDataService: AuthDataService) { }
+  model: userLoggedData;
 
-  get() {
-    this.userDataService.get().subscribe((data:any[]) => {
-      this.users = data;
-      this.showList = true;
-    }, error => {
-        console.log(error);
-        alert('internal error!');
-    })
+  constructor(private userDataService: UserDataService, private authDataService: AuthDataService) {
+    this.model = new userLoggedData();
   }
+
+  ngOnInit() {
+    this.model = this.authDataService.getUserData();
+    this.get();
+  }
+
+
+
+  openEditModal(user) {
+
+  }
+
+
 
   save() {
     if (this.user.id) {
@@ -36,6 +44,18 @@ export class UsersComponent implements OnInit {
       this.post()
     }
   }
+
+
+  get() {
+    this.userDataService.get().subscribe((data: any[]) => {
+      this.users = data;
+      this.showList = true;
+    }, error => {
+      console.log(error);
+      alert('internal error!');
+    })
+  }
+
 
   post() {
     this.userDataService.post(this.user).subscribe(data => {
@@ -47,8 +67,8 @@ export class UsersComponent implements OnInit {
         alert('Error! This user cannot be registered!');
       }
     }, error => {
-        console.log(error);
-        alert('internal error!');
+      console.log(error);
+      alert('internal error!');
     })
   }
 
@@ -67,13 +87,9 @@ export class UsersComponent implements OnInit {
     })
   }
 
-  openDetails(user) {
-    this.showList = false;
-    this.user = user;
-  }
 
   delete(user) {
-    this.userDataService.delete().subscribe(data => {
+    this.userDataService.delete(user.id).subscribe(data => {
       if (data) {
         alert('The user has been deleted!');
         this.get();
@@ -87,7 +103,5 @@ export class UsersComponent implements OnInit {
     })
   }
 
-  ngOnInit() {
-    
-  }
+
 }

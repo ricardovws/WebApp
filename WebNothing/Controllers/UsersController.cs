@@ -55,15 +55,14 @@ namespace WebNothing.Controllers
             return Ok(this.userService.Put(userViewModel));
         }
 
-        [HttpDelete]
-        public IActionResult Delete()
+        [HttpDelete("{id}")]
+        [Authorize(Roles = "fullAdmin")]
+        public IActionResult Delete(int id)
         {
-            int _userId = int.Parse(TokenService.GetValueFromClaim(HttpContext.User.Identity, ClaimTypes.NameIdentifier));
+            //int _userId = int.Parse(TokenService.GetValueFromClaim(HttpContext.User.Identity, ClaimTypes.Email));
 
-            return Ok(this.userService.Delete(_userId));
+            return Ok(this.userService.Delete(id));
         }
-
-        //little teste
 
     }
 }

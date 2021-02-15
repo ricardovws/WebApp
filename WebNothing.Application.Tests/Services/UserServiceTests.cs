@@ -15,124 +15,124 @@ namespace WebNothing.Application.Tests.Services
 {
     public class UserServiceTests
     {
-             
-        private UserService userService;
 
-        public UserServiceTests()
-        {
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<User, UserViewModel>();
-                cfg.CreateMap<UserViewModel, User>();
-            });
+        //private UserService userService;
 
-            var mapper = config.CreateMapper();
+        //public UserServiceTests()
+        //{
+        //    var config = new MapperConfiguration(cfg =>
+        //    {
+        //        cfg.CreateMap<User, UserViewModel>();
+        //        cfg.CreateMap<UserViewModel, User>();
+        //    });
 
-            userService = new UserService(new Mock<IUserRepository>().Object, mapper);
-                       
-        }
+        //    var mapper = config.CreateMapper();
 
-        #region ValidatingSendingId
+        //    userService = new UserService(new Mock<IUserRepository>().Object, mapper);
 
-        [Fact]
-        public void Post_SendingValidId()
-        {
-            var exception = Assert.Throws<Exception>(() => userService.Post(new UserViewModel { Id = 1, Name = "Jorge Ferreira", Email = "teucfdbrilh@cdu.com" }));
+        //}
 
-            Assert.Equal("UserID must be zero or empty", exception.Message);
-        }
+        //#region ValidatingSendingId
 
-        [Fact]
-        public void GetById_SendingIdEqualsToZero()
-        {
-            var exception = Assert.Throws<Exception>(() => userService.GetById(0));
-            Assert.Equal("User not found", exception.Message);
-        }
+        //[Fact]
+        //public void Post_SendingValidId()
+        //{
+        //    var exception = Assert.Throws<Exception>(() => userService.Post(new UserViewModel { Id = 1, Name = "Jorge Ferreira", Email = "teucfdbrilh@cdu.com" }));
 
-        [Fact]
-        public void GetById_SendingNegativeId()
-        {
-            var exception = Assert.Throws<Exception>(() => userService.GetById(-1));
-            Assert.Equal("User not found", exception.Message);
-        }
+        //    Assert.Equal("UserID must be zero or empty", exception.Message);
+        //}
 
-        [Fact]
-        public void Put_SendingIdEqualsToZero()
-        {
-            var exception = Assert.Throws<Exception>(() => userService.Put(new UserViewModel { Id = 0, Name = "José das Couves", Email = "nothingless@n.com"}));
-            Assert.Equal("User not found", exception.Message);
-        }
+        //[Fact]
+        //public void GetById_SendingIdEqualsToZero()
+        //{
+        //    var exception = Assert.Throws<Exception>(() => userService.GetById(0));
+        //    Assert.Equal("User not found", exception.Message);
+        //}
 
-        [Fact]
-        public void Put_SendingNegativeId()
-        {
-            var exception = Assert.Throws<Exception>(() => userService.Put(new UserViewModel { Id = -2, Name = "José das Couves", Email = "nothingless@n.com" }));
-            Assert.Equal("User not found", exception.Message);
-        }
+        //[Fact]
+        //public void GetById_SendingNegativeId()
+        //{
+        //    var exception = Assert.Throws<Exception>(() => userService.GetById(-1));
+        //    Assert.Equal("User not found", exception.Message);
+        //}
 
-        [Fact]
-        public void Delete_SendingIdEqualsToZero()
-        {
-            var exception = Assert.Throws<Exception>(() => userService.Delete(0));
-            Assert.Equal("User not found", exception.Message);
-        }
+        //[Fact]
+        //public void Put_SendingIdEqualsToZero()
+        //{
+        //    var exception = Assert.Throws<Exception>(() => userService.Put(new UserViewModel { Id = 0, Name = "José das Couves", Email = "nothingless@n.com"}));
+        //    Assert.Equal("User not found", exception.Message);
+        //}
 
-        [Fact]
-        public void Delete_SendingNegativeId()
-        {
-            var exception = Assert.Throws<Exception>(() => userService.Delete(-23));
-            Assert.Equal("User not found", exception.Message);
-        }
+        //[Fact]
+        //public void Put_SendingNegativeId()
+        //{
+        //    var exception = Assert.Throws<Exception>(() => userService.Put(new UserViewModel { Id = -2, Name = "José das Couves", Email = "nothingless@n.com" }));
+        //    Assert.Equal("User not found", exception.Message);
+        //}
 
-        [Fact]
-        public void Authenticate_SendingEmptyValues()
-        {
-            var exception = Assert.Throws<Exception>(() => userService.Authenticate(new UserAuthenticateRequestViewModel()));
-            Assert.Equal("Email/Password are required.", exception.Message);
-        }
-        #endregion
+        //[Fact]
+        //public void Delete_SendingIdEqualsToZero()
+        //{
+        //    var exception = Assert.Throws<Exception>(() => userService.Delete(0));
+        //    Assert.Equal("User not found", exception.Message);
+        //}
 
-        #region ValidatingCorrenctObject
+        //[Fact]
+        //public void Delete_SendingNegativeId()
+        //{
+        //    var exception = Assert.Throws<Exception>(() => userService.Delete(-23));
+        //    Assert.Equal("User not found", exception.Message);
+        //}
 
-        [Fact]
-        public void Post_SendingValidObject()
-        {
-            var result = userService.Post(new UserViewModel { Name = "Manuel", Email = "manuel.manual@mm.com" });
-            Assert.True(result);
-        }
+        //[Fact]
+        //public void Authenticate_SendingEmptyValues()
+        //{
+        //    var exception = Assert.Throws<Exception>(() => userService.Authenticate(new UserAuthenticateRequestViewModel()));
+        //    Assert.Equal("Email/Password are required.", exception.Message);
+        //}
+        //#endregion
 
-        [Fact]
-        public void Get_ValidatingObject()
-        {
-            List<User> _users = new List<User>();
-            _users.Add(new User { Id = 1, Name = "Jorge", Email = "jorge@jorge.com", DateCreated = DateTime.Now });
+        //#region ValidatingCorrenctObject
 
-            var _userRepository = new Mock<IUserRepository>();
+        //[Fact]
+        //public void Post_SendingValidObject()
+        //{
+        //    var result = userService.Post(new UserViewModel { Name = "Manuel", Email = "manuel.manual@mm.com" });
+        //    Assert.True(result);
+        //}
 
-            _userRepository.Setup(x => x.GetAll()).Returns(_users);
+        //[Fact]
+        //public void Get_ValidatingObject()
+        //{
+        //    List<User> _users = new List<User>();
+        //    _users.Add(new User { Id = 1, Name = "Jorge", Email = "jorge@jorge.com", DateCreated = DateTime.Now });
 
-            var _autoMapperProfile = new AutoMapperSetup();
-            var _configuration = new MapperConfiguration(x => x.AddProfile(_autoMapperProfile));
-            IMapper _mapper = new Mapper(_configuration);
+        //    var _userRepository = new Mock<IUserRepository>();
 
-            userService = new UserService(_userRepository.Object, _mapper);
-            
-            var result = userService.Get();
-            Assert.True(result.Count > 0);
+        //    _userRepository.Setup(x => x.GetAll()).Returns(_users);
 
-        }
+        //    var _autoMapperProfile = new AutoMapperSetup();
+        //    var _configuration = new MapperConfiguration(x => x.AddProfile(_autoMapperProfile));
+        //    IMapper _mapper = new Mapper(_configuration);
 
-        #endregion
+        //    userService = new UserService(_userRepository.Object, _mapper);
 
-        #region ValidatingRequiredFields
+        //    var result = userService.Get();
+        //    Assert.True(result.Count > 0);
 
-        [Fact]
-        public void Post_SendingInvalidObject()
-        {
-            var exception = Assert.Throws<ValidationException>(() => userService.Post(new UserViewModel { Name = "Manuel" }));
-            Assert.Equal("The Email field is required.", exception.Message);
-        }
+        //}
 
-        #endregion
+        //#endregion
+
+        //#region ValidatingRequiredFields
+
+        //[Fact]
+        //public void Post_SendingInvalidObject()
+        //{
+        //    var exception = Assert.Throws<ValidationException>(() => userService.Post(new UserViewModel { Name = "Manuel" }));
+        //    Assert.Equal("The Email field is required.", exception.Message);
+        //}
+
+        //#endregion
     }
 }

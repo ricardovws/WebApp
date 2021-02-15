@@ -1,13 +1,17 @@
-<div *ngIf="!isAuthenticated">
+<div *ngIf="!authDataService.isLogged()">
   <form>
     <div class="mb-3">
       <label for="exampleInputEmail" class="form-label">Email:</label>
-      <input type="email" class="form-control" id="exampleInputEmail" placeholder="Email" [(ngModel)]="userLogin.email" name="email">
+      <input type="email" class="form-control" id="exampleInputEmail" placeholder="Email" [(ngModel)]="model.userLogin.email" name="email">
     </div>
     <div class="mb-3">
       <label for="exampleInputPassword" class="form-label">Password:</label>
-      <input type="password" class="form-control" id="exampleInputPassword" placeholder="Password" [(ngModel)]="userLogin.password" name="password">
+      <input type="password" class="form-control" id="exampleInputPassword" placeholder="Password" [(ngModel)]="model.userLogin.password" name="password">
     </div>
     <button type="submit" class="btn btn-primary" (click)="authenticate()">Login</button>
   </form>
+</div>
+
+<div *ngIf="authDataService.isLogged()">
+  <p>Welcome {{model.userLogged?.user?.name}}! :)</p>
 </div>
