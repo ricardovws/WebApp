@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { UserDataService } from '../_data-services/user.data-service';
 import { AuthDataService } from '../_data-services/auth.data-service';
 import { userLoggedData } from '../__models/userLoggedData';
-//import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalComponent } from '../modal/modal.component';
 
 @Component({
   selector: 'app-users',
@@ -16,11 +17,12 @@ export class UsersComponent implements OnInit {
   user: any = {};
   showList: boolean = true;
 
-  editModal: boolean = false;
-
   model: userLoggedData;
 
-  constructor(private userDataService: UserDataService, private authDataService: AuthDataService) {
+  
+  constructor(private userDataService: UserDataService, private authDataService: AuthDataService,
+    private modalService: NgbModal) {
+
     this.model = new userLoggedData();
   }
 
@@ -30,11 +32,15 @@ export class UsersComponent implements OnInit {
   }
 
 
-
-  openEditModal(user) {
-
+  onDelete(user) {
+    const modalRef = this.modalService.open(ModalComponent, { centered: true });
+    modalRef.componentInstance.action = 'Delete';
+    modalRef.componentInstance.objectId = user.id;
+    modalRef.componentInstance.objectDescription = user.name;
+    modalRef.componentInstance.passEntry.subscribe((receivedEntry) => {
+      this.delete(user);
+    });
   }
-
 
 
   save() {

@@ -2,7 +2,6 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable, NgModule } from "@angular/core";
 import { Router, Routes, RouterModule } from "@angular/router";
 import { userLoggedData } from "../__models/userLoggedData";
-import { debug } from "console";
 
 
 const routes: Routes = [
