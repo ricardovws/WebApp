@@ -57,4 +57,10 @@ export class AuthDataService {
     this.router.navigate(['/']);
   }
 
+  //That's ok! Come in :)
+  thatsOk() {
+    if (this.model.userLogged != null)
+      this.router.navigate(['/users']);
+  }
+
 }

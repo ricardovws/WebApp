@@ -18,19 +18,31 @@ export class AuthComponent implements OnInit {
 
   }
   authenticate() {
-    this.authDataService.authenticate(this.model.userLogin).subscribe((data: any) => {
-      if (data.user) {
-        localStorage.setItem('user_logged', JSON.stringify(data));
-        this.model = this.authDataService.getUserData();
-        this.cleanUserLoginDataScreen();
+    if (this.justCheckLogin()) {
+      this.authDataService.authenticate(this.model.userLogin).subscribe((data: any) => {
+        if (data.user) {
+          localStorage.setItem('user_logged', JSON.stringify(data));
+          this.model = this.authDataService.getUserData();
+          //this.cleanUserLoginDataScreen();
+          this.authDataService.thatsOk();
+        } else {
+          alert('Error! This user cannot be logged!');
+        }
+      }, error => {
+        console.log(error);
+        alert('User invalid!');
+      })
+    }
+  }
 
-      } else {
-        alert('Error! This user cannot be logged!');
-      }
-    }, error => {
-      console.log(error);
-      alert('User invalid!');
-    })
+  justCheckLogin() {
+    if (this.model.userLogin == null || this.model.userLogin == null) {
+      alert('ESCREVE ALGUMA COISA AI HOME!!!!!');
+      return false;
+    } else {
+      return true;
+    }
+    
   }
 
   cleanUserLoginDataScreen() {
@@ -39,7 +51,8 @@ export class AuthComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.authDataService.isAuthenticated();
+    //this.authDataService.isAuthenticated();
     this.model = this.authDataService.getUserData();
+    this.authDataService.thatsOk();
   }
 }

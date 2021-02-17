@@ -9,15 +9,18 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 export class ModalComponent {
 
   @Input() action;
-  @Input() objectId;
+  @Input() target;
+  @Input() signal;
   @Input() objectDescription;
-
+  @Input() buttonType;
+  
+  
   @Output() passEntry: EventEmitter<any> = new EventEmitter();
 
   constructor(public activeModal: NgbActiveModal) { }
 
   passBack() {
-    this.passEntry.emit(this.objectId);
+    this.passEntry.emit();
     this.activeModal.close();
   }
 

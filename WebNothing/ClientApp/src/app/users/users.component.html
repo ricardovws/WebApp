@@ -29,7 +29,7 @@
     <tbody>
       <tr *ngFor="let user of users">
         <th scope="row">
-          <button class="btn-primary btn" (click)="openEditModal(user)">Edit</button>
+          <button class="btn-primary btn" (click)="onEdit(user)">Edit</button>
           <button class="btn-danger btn" (click)="onDelete(user)">Delete</button>
         </th>
         <th scope="row">{{user.id}}</th>
@@ -40,22 +40,4 @@
   </table>
 </div>
 
-<!--<div *ngIf="!showList">
-  <form>
-    <div class="mb-3">
-      <label for="exampleInputName" class="form-label">Name:</label>
-      <input type="text" class="form-control" id="exampleInputName" aria-describedby="emailHelp" placeholder="Name" [(ngModel)]="user.name" name="name">
-    </div>
-    <div class="mb-3">
-      <label for="exampleInputEmail" class="form-label">Email:</label>
-      <input type="email" class="form-control" id="exampleInputEmail" placeholder="Email"
-             [(ngModel)]="user.email" name="email">
-    </div>
-    <div class="mb-3">
-      <label for="exampleInputPassword" class="form-label">Password:</label>
-      <input type="password" class="form-control" id="exampleInputPassword" placeholder="Password"
-             [(ngModel)]="user.password" name="password">
-    </div>
-    <button type="submit" class="btn btn-primary" (click)="save()">Save</button>
-  </form>
-</div>-->
+

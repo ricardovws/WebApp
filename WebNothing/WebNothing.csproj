@@ -33,6 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\__models\modalModel.ts" />
     <None Remove="ClientApp\src\app\__models\userLoggedData.ts" />
   </ItemGroup>
 
@@ -48,6 +49,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\__models\modalModel.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\__models\userLoggedData.ts" />
   </ItemGroup>
 

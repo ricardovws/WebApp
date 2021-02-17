@@ -1,13 +1,32 @@
 <div class="modal-header">
-  <h4 class="modal-title">{{action}} {{objectDescription}} {{objectId}}</h4>
+  <h4 class="modal-title"><strong>{{action}}</strong> action!</h4>
   <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
 <div class="modal-body">
-  <p>Are you sure?</p>
+  <p>{{objectDescription}}<strong>{{target}}</strong>{{signal}}</p>
+</div>
+<div>
+  <form>
+    <div class="mb-3">
+      <label for="exampleInputName" class="form-label">Name:</label>
+      <!--<input type="text" class="form-control" id="exampleInputName" aria-describedby="emailHelp" placeholder="Name" [(ngModel)]="user.name" name="name">-->
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputEmail" class="form-label">Email:</label>
+      <!--<input type="email" class="form-control" id="exampleInputEmail" placeholder="Email"
+             [(ngModel)]="user.email" name="email">-->
+    </div>
+    <!--<div class="mb-3">
+      <label for="exampleInputPassword" class="form-label">Password:</label>
+      <input type="password" class="form-control" id="exampleInputPassword" placeholder="Password"
+             [(ngModel)]="user.password" name="password">
+    </div>-->
+    <!--<button type="submit" class="btn btn-primary" (click)="save()">Save</button>-->
+  </form>
 </div>
 <div class="modal-footer">
-  <button type="button" class="btn btn-danger" (click)="passBack(objectId)">Delete</button>
+  <button type="button" class="btn btn-{{buttonType}}" (click)="passBack(objectId)">{{action}}</button>
   <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
 </div>

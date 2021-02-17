@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { UserDataService } from '../_data-services/user.data-service';
 import { AuthDataService } from '../_data-services/auth.data-service';
 import { userLoggedData } from '../__models/userLoggedData';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ModalComponent } from '../modal/modal.component';
+import { modalModel } from '../__models/modalModel';
 
 @Component({
   selector: 'app-users',
@@ -19,6 +20,7 @@ export class UsersComponent implements OnInit {
 
   model: userLoggedData;
 
+  modalContent: modalModel;
   
   constructor(private userDataService: UserDataService, private authDataService: AuthDataService,
     private modalService: NgbModal) {
@@ -27,19 +29,49 @@ export class UsersComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.model = this.authDataService.getUserData();
+    //Ao iniciar o componente, caso o usuário não
+    //esteja com o token válido, ele será direcionado para a tela de login!
+    //Caso estiver ok e conseguir fazer o get, terminar de pegar as infos para mandar para a view!
     this.get();
   }
 
+  onEdit(user) {
+    this.modalContent = new modalModel(
+      'Edit',
+      'Would you really like to edit ',
+      user.name,
+      '?',
+      'info'
+    );
+    this.buildModalContent(this.modalContent).componentInstance.passEntry.subscribe((receivedEntry) => {
+      this.user.name = 'aiaiaia';
+      this.user.email = 'ashuas@husahusahu.ciom';
+      this.put();
+    });
+  }
 
   onDelete(user) {
-    const modalRef = this.modalService.open(ModalComponent, { centered: true });
-    modalRef.componentInstance.action = 'Delete';
-    modalRef.componentInstance.objectId = user.id;
-    modalRef.componentInstance.objectDescription = user.name;
-    modalRef.componentInstance.passEntry.subscribe((receivedEntry) => {
+    this.modalContent = new modalModel(
+      'Delete',
+      'Would you really like to delete ',
+      user.name,
+      '?',
+      'danger'     
+    );
+    this.buildModalContent(this.modalContent).componentInstance.passEntry.subscribe((receivedEntry) => {
       this.delete(user);
     });
+  }
+
+  private buildModalContent(modalContent: modalModel) {
+    const modalRef = this.modalService.open(ModalComponent, { centered: true });
+    modalRef.componentInstance.action = modalContent.action;
+    modalRef.componentInstance.buttonType = modalContent.buttonType;
+    modalRef.componentInstance.objectDescription = modalContent.description;
+    modalRef.componentInstance.signal = modalContent.signal;
+    modalRef.componentInstance.target = modalContent.target;
+
+    return modalRef;
   }
 
 
@@ -56,9 +88,11 @@ export class UsersComponent implements OnInit {
     this.userDataService.get().subscribe((data: any[]) => {
       this.users = data;
       this.showList = true;
+      this.model = this.authDataService.getUserData();
     }, error => {
       console.log(error);
-      alert('internal error!');
+        //alert('internal error!');
+        this.authDataService.logOut();
     })
   }
 
