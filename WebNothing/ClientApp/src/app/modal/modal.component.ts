@@ -13,7 +13,8 @@ export class ModalComponent {
   @Input() signal;
   @Input() objectDescription;
   @Input() buttonType;
-  
+  @Input() deleteModal;
+  isDeleteModal: boolean;
   
   @Output() passEntry: EventEmitter<any> = new EventEmitter();
 
@@ -23,6 +24,5 @@ export class ModalComponent {
     this.passEntry.emit();
     this.activeModal.close();
   }
-
 }
 

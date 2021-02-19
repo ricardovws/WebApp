@@ -23,7 +23,7 @@ export class AuthComponent implements OnInit {
         if (data.user) {
           localStorage.setItem('user_logged', JSON.stringify(data));
           this.model = this.authDataService.getUserData();
-          //this.cleanUserLoginDataScreen();
+          this.cleanUserLoginDataScreen();
           this.authDataService.thatsOk();
         } else {
           alert('Error! This user cannot be logged!');
@@ -36,13 +36,12 @@ export class AuthComponent implements OnInit {
   }
 
   justCheckLogin() {
-    if (this.model.userLogin == null || this.model.userLogin == null) {
+    if (this.model.userLogin.email == undefined || this.model.userLogin.password == undefined) {
       alert('ESCREVE ALGUMA COISA AI HOME!!!!!');
       return false;
     } else {
       return true;
-    }
-    
+    }    
   }
 
   cleanUserLoginDataScreen() {

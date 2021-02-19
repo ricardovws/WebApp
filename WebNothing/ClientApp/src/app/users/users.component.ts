@@ -41,7 +41,8 @@ export class UsersComponent implements OnInit {
       'Would you really like to edit ',
       user.name,
       '?',
-      'info'
+      'info',
+      false
     );
     this.buildModalContent(this.modalContent).componentInstance.passEntry.subscribe((receivedEntry) => {
       this.user.name = 'aiaiaia';
@@ -56,7 +57,8 @@ export class UsersComponent implements OnInit {
       'Would you really like to delete ',
       user.name,
       '?',
-      'danger'     
+      'danger',
+      true
     );
     this.buildModalContent(this.modalContent).componentInstance.passEntry.subscribe((receivedEntry) => {
       this.delete(user);
