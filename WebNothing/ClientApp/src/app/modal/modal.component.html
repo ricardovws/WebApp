@@ -7,23 +7,20 @@
 <div class="modal-body">
   <p>{{objectDescription}}<strong>{{target}}</strong>{{signal}}</p>
 </div>
-<div *ngIf="true">
+<div *ngIf="isEditModal()">
   <form>
     <div class="mb-3">
-      <label for="exampleInputName" class="form-label">Name:{{deleteModal}}</label>
-      <p>{{deleteModal}}</p>
-      <!--<input type="text" class="form-control" id="exampleInputName" aria-describedby="emailHelp" placeholder="Name" [(ngModel)]="user.name" name="name">-->
+      <label for="exampleInputName" class="form-label">Name:</label>
+      <input type="text" class="form-control" id="exampleInputName" aria-describedby="emailHelp" placeholder="Name" name="name">
     </div>
     <div class="mb-3">
       <label for="exampleInputEmail" class="form-label">Email:</label>
-      <!--<input type="email" class="form-control" id="exampleInputEmail" placeholder="Email"
-             [(ngModel)]="user.email" name="email">-->
+      <input type="email" class="form-control" id="exampleInputEmail" placeholder="Email" name="email">
     </div>
-    <!--<div class="mb-3">
+    <div class="mb-3">
       <label for="exampleInputPassword" class="form-label">Password:</label>
-      <input type="password" class="form-control" id="exampleInputPassword" placeholder="Password"
-             [(ngModel)]="user.password" name="password">
-    </div>-->
+      <input type="password" class="form-control" id="exampleInputPassword" placeholder="Password" name="password">
+    </div>
     <!--<button type="submit" class="btn btn-primary" (click)="save()">Save</button>-->
   </form>
 </div>

@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { debug } from 'console';
 
 @Component({
   selector: 'app-modal',
@@ -13,9 +14,8 @@ export class ModalComponent {
   @Input() signal;
   @Input() objectDescription;
   @Input() buttonType;
-  @Input() deleteModal;
-  isDeleteModal: boolean;
-  
+
+
   @Output() passEntry: EventEmitter<any> = new EventEmitter();
 
   constructor(public activeModal: NgbActiveModal) { }
@@ -24,5 +24,11 @@ export class ModalComponent {
     this.passEntry.emit();
     this.activeModal.close();
   }
+
+  isEditModal() {
+    if (this.action == 'Edit')
+      return true;
+  }
+
 }
 

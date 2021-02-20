@@ -41,12 +41,13 @@ export class UsersComponent implements OnInit {
       'Would you really like to edit ',
       user.name,
       '?',
-      'info',
-      false
+      'info'
     );
     this.buildModalContent(this.modalContent).componentInstance.passEntry.subscribe((receivedEntry) => {
-      this.user.name = 'aiaiaia';
-      this.user.email = 'ashuas@husahusahu.ciom';
+      debugger;
+      //this.user.name = 'aiaiaia';
+      //this.user.email = 'ashuas@husahusahu.ciom';
+      var teste = user;
       this.put();
     });
   }
@@ -57,8 +58,7 @@ export class UsersComponent implements OnInit {
       'Would you really like to delete ',
       user.name,
       '?',
-      'danger',
-      true
+      'danger'
     );
     this.buildModalContent(this.modalContent).componentInstance.passEntry.subscribe((receivedEntry) => {
       this.delete(user);
