@@ -13,6 +13,8 @@ import { AuthComponent } from './auth/auth.component';
 import { AuthDataService } from './_data-services/auth.data-service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ModalComponent } from './modal/modal.component';
+import { ToastComponent } from './toast/toast.component';
+import { ToastService } from './_data-services/toast.data-service';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,8 @@ import { ModalComponent } from './modal/modal.component';
     HomeComponent,
     UsersComponent,
     AuthComponent,
-    ModalComponent
+    ModalComponent,
+    ToastComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -32,9 +35,9 @@ import { ModalComponent } from './modal/modal.component';
       { path: 'users', component: UsersComponent }
     ]),
     Interceptor,
-    NgbModule,
+    NgbModule
   ],
-  providers: [UserDataService, AuthDataService],
+  providers: [UserDataService, AuthDataService, ToastService],
   bootstrap: [AppComponent],
   entryComponents: [ModalComponent]
 })

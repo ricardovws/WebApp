@@ -6,6 +6,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalComponent } from '../modal/modal.component';
 import { modalModel } from '../__models/modalModel';
 import { userModel } from '../__models/userModel';
+import { ToastService } from '../_data-services/toast.data-service';
 
 @Component({
   selector: 'app-users',
@@ -26,7 +27,8 @@ export class UsersComponent implements OnInit {
   modalContent: modalModel;
   
   constructor(private userDataService: UserDataService, private authDataService: AuthDataService,
-    private modalService: NgbModal) {
+    private modalService: NgbModal,
+    private toastService: ToastService){
 
     this.model = new userLoggedData();
   }
@@ -37,6 +39,16 @@ export class UsersComponent implements OnInit {
     //Caso estiver ok e conseguir fazer o get, terminar de pegar as infos para mandar para a view!
     this.get();
   }
+
+  showStandard() {
+    //alert('olha o pai!')
+    //this.toastService.show('I am a standard toast');
+
+    this.toastService.show('I am a standard toast');
+
+
+  }
+
 
   onEdit(user) {
     this.modalContent = new modalModel(

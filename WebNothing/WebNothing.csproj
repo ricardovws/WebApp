@@ -33,6 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\_data-services\toast.data-service.ts" />
     <None Remove="ClientApp\src\app\__models\modalModel.ts" />
     <None Remove="ClientApp\src\app\__models\userLoggedData.ts" />
     <None Remove="ClientApp\src\app\__models\userModel.ts" />
@@ -50,6 +51,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\_data-services\toast.data-service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\__models\modalModel.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\__models\userLoggedData.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\__models\userModel.ts" />
