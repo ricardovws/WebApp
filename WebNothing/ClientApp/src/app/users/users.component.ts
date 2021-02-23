@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { UserDataService } from '../_data-services/user.data-service';
 import { AuthDataService } from '../_data-services/auth.data-service';
 import { userLoggedData } from '../__models/userLoggedData';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalComponent } from '../modal/modal.component';
 import { modalModel } from '../__models/modalModel';
+import { userModel } from '../__models/userModel';
 
 @Component({
   selector: 'app-users',
@@ -14,8 +15,10 @@ import { modalModel } from '../__models/modalModel';
 })
 export class UsersComponent implements OnInit {
 
-  users: any[] = [];
-  user: any = {};
+  users: userModel[];
+  
+  user: userModel;
+  
   showList: boolean = true;
 
   model: userLoggedData;
@@ -37,42 +40,29 @@ export class UsersComponent implements OnInit {
 
   onEdit(user) {
     this.modalContent = new modalModel(
-      'Edit',
-      'Would you really like to edit ',
-      user.name,
-      '?',
-      'info'
+      'Edit'
     );
-    this.buildModalContent(this.modalContent).componentInstance.passEntry.subscribe((receivedEntry) => {
-      debugger;
-      //this.user.name = 'aiaiaia';
-      //this.user.email = 'ashuas@husahusahu.ciom';
-      var teste = user;
+
+    this.buildModalContent(this.modalContent, user).componentInstance.passEntry.subscribe((receivedEntry) => {
+      this.user = new userModel(receivedEntry.id, receivedEntry.name, receivedEntry.email,
+        receivedEntry.password);
       this.put();
     });
   }
 
   onDelete(user) {
     this.modalContent = new modalModel(
-      'Delete',
-      'Would you really like to delete ',
-      user.name,
-      '?',
-      'danger'
+      'Delete'
     );
-    this.buildModalContent(this.modalContent).componentInstance.passEntry.subscribe((receivedEntry) => {
+    this.buildModalContent(this.modalContent, user).componentInstance.passEntry.subscribe((receivedEntry) => {
       this.delete(user);
     });
   }
 
-  private buildModalContent(modalContent: modalModel) {
+  private buildModalContent(modalContent: modalModel, user: userModel) {
     const modalRef = this.modalService.open(ModalComponent, { centered: true });
     modalRef.componentInstance.action = modalContent.action;
-    modalRef.componentInstance.buttonType = modalContent.buttonType;
-    modalRef.componentInstance.objectDescription = modalContent.description;
-    modalRef.componentInstance.signal = modalContent.signal;
-    modalRef.componentInstance.target = modalContent.target;
-
+    modalRef.componentInstance.model = user;
     return modalRef;
   }
 
@@ -87,7 +77,7 @@ export class UsersComponent implements OnInit {
 
 
   get() {
-    this.userDataService.get().subscribe((data: any[]) => {
+    this.userDataService.get().subscribe((data: userModel[]) => {
       this.users = data;
       this.showList = true;
       this.model = this.authDataService.getUserData();
@@ -100,11 +90,12 @@ export class UsersComponent implements OnInit {
 
 
   post() {
-    this.userDataService.post(this.user).subscribe(data => {
+    this.userDataService.post(this.user).subscribe((data: userModel) => {
       if (data) {
         alert('The user has been registered!');
         this.get();
-        this.user = {};
+        this.user = null;
+        //this.user = {};
       } else {
         alert('Error! This user cannot be registered!');
       }
@@ -115,11 +106,12 @@ export class UsersComponent implements OnInit {
   }
 
   put() {
-    this.userDataService.put(this.user).subscribe(data => {
+    this.userDataService.put(this.user).subscribe((data: userModel) => {
       if (data) {
         alert('The user has been updated!');
         this.get();
-        this.user = {};
+        this.user = null;
+        //this.user = {};
       } else {
         alert('Error! This user cannot be updated!');
       }
@@ -131,11 +123,12 @@ export class UsersComponent implements OnInit {
 
 
   delete(user) {
-    this.userDataService.delete(user.id).subscribe(data => {
+    this.userDataService.delete(user.id).subscribe((data: userModel) => {
       if (data) {
         alert('The user has been deleted!');
         this.get();
-        this.user = {};
+        this.user = null;
+        //this.user = {};
       } else {
         alert('Error! This user cannot be deleted!');
       }

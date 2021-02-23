@@ -35,6 +35,7 @@
   <ItemGroup>
     <None Remove="ClientApp\src\app\__models\modalModel.ts" />
     <None Remove="ClientApp\src\app\__models\userLoggedData.ts" />
+    <None Remove="ClientApp\src\app\__models\userModel.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -51,6 +52,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\__models\modalModel.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\__models\userLoggedData.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\__models\userModel.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
