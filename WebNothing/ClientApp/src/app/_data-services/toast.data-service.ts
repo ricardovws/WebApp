@@ -1,12 +1,11 @@
-import { Injectable, TemplateRef } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 export class ToastService {
   toasts: any[] = [];
 
-  show(textOrTpl: string | TemplateRef<any>, options: any = {}) {
-    //debugger;
-    this.toasts.push({ textOrTpl, ...options });
+  show(header: string, body: string) {
+    this.toasts.push({ header, body });
   }
 
   remove(toast) {

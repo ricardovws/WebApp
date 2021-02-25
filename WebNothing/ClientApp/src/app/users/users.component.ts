@@ -25,6 +25,8 @@ export class UsersComponent implements OnInit {
   model: userLoggedData;
 
   modalContent: modalModel;
+
+  showToast: boolean;
   
   constructor(private userDataService: UserDataService, private authDataService: AuthDataService,
     private modalService: NgbModal,
@@ -41,14 +43,8 @@ export class UsersComponent implements OnInit {
   }
 
   showStandard() {
-    //alert('olha o pai!')
-    //this.toastService.show('I am a standard toast');
-
-    this.toastService.show('I am a standard toast');
-
-
+    this.toastService.show("litte test", "it's just a little test :)");
   }
-
 
   onEdit(user) {
     this.modalContent = new modalModel(
