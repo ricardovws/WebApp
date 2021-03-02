@@ -1,8 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { debug } from 'console';
-import { userLoggedData } from '../__models/userLoggedData';
 import { userModel } from '../__models/userModel';
+import { ErrorHandlerService } from '../_data-services/errorHandler';
 
 @Component({
   selector: 'app-modal',
@@ -17,11 +16,15 @@ export class ModalComponent {
   
   @Output() passEntry: EventEmitter<any> = new EventEmitter();
 
-  constructor(public activeModal: NgbActiveModal) { }
+  constructor(public activeModal: NgbActiveModal, public errorHandlerService: ErrorHandlerService) { }
 
   passBack(model) {
     this.passEntry.emit(model);
-    this.activeModal.close();
+    if (this.action == 'Edit') {
+
+    } else {
+      this.activeModal.close();
+    }    
   }
 
   isEditModal() {

@@ -17,7 +17,6 @@ export class UserDataService {
   }
 
   put(data) {
-    debugger;
     return this.http.put(this.module, data);
   }
 

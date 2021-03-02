@@ -13,15 +13,24 @@
     <form>
       <div class="mb-3 w-50">
         <label for="exampleInputName" class="form-label">Name:</label>
-        <input type="text" class="form-control" id="exampleInputName" aria-describedby="emailHelp" placeholder="Name" [(ngModel)]="model.name" name="name">
+        <input type="text" class="form-control {{model.nameError?.errorTarget}}" id="exampleInputName" aria-describedby="emailHelp" placeholder="Name" [(ngModel)]="model.name" name="name">
+        <div class="invalid-feedback">{{model.nameError?.errorDescription}}</div>
       </div>
       <div class="mb-3 w-50">
         <label for="exampleInputEmail" class="form-label">Email:</label>
-        <input type="email" class="form-control" id="exampleInputEmail" placeholder="Email" [(ngModel)]="model.email" name="email">
+        <input type="email" class="form-control {{model.emailError?.errorTarget}}" id="exampleInputEmail" placeholder="Email" [(ngModel)]="model.email" name="email">
+        <div class="invalid-feedback">{{model.emailError?.errorDescription}}</div>
       </div>
       <div class="mb-3 w-50">
         <label for="exampleInputPassword" class="form-label">Password:</label>
-        <input type="password" class="form-control" id="exampleInputPassword" placeholder="Password" [(ngModel)]="model.password" name="password">
+        <input type="password" class="form-control {{model.passwordError?.errorTarget}}" id="exampleInputPassword" placeholder="Password" [(ngModel)]="model.password" name="password">
+        <div class="invalid-feedback">{{model.passwordError?.errorDescription}}</div>
+
+
+        <!--<input type="password" class="form-control is-invalid" id="exampleInputPassword" placeholder="Password" [(ngModel)]="model.password" name="password">
+        <div class="invalid-feedback">Sorry, that username's taken. Try another?</div>-->
+
+
       </div>
     </form>
   </div>

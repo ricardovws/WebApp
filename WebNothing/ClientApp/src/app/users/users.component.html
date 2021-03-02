@@ -4,9 +4,10 @@
 
 <div class="btn-toolbar justify-content-between" role="toolbar">
   <div class="btn-group" role="group">
-    <button type="button" class="btn btn-primary" (click)="showList = !showList">{{showList ? 'Hide list' : 'Show list'}}</button>
 
-    <button class="btn btn-info" (click)="showStandard()" ngbTooltip="Will disappear in 5s">Standard toast</button>&nbsp;
+    <button class="btn btn-info" (click)="showStandard()" ngbTooltip="Click here to add an user!">Add user</button>
+
+    <button type="button" class="btn btn-secondary" (click)="showList = !showList" ngbTooltip="Click here to hide or show the list!">{{showList ? 'Hide list' : 'Show list'}}</button>
   </div>
 
   <!--<div *ngIf="isAuthenticated" class="input-group">

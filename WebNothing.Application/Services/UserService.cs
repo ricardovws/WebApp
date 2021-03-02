@@ -45,7 +45,7 @@ namespace WebNothing.Application.Services
 
             User _user = mapper.Map<User>(userViewModel);
 
-            _user.DateCreated = DateTime.Now;
+            _user.DateCreated = DateTime.UtcNow;
 
             _user.Password = authService.EncryptPassword(_user.Password);
 
@@ -72,9 +72,11 @@ namespace WebNothing.Application.Services
             if (_user == null)
                 throw new Exception("User not found");
 
-            _user = mapper.Map<User>(userViewModel);
-
-            _user.Password = authService.EncryptPassword(_user.Password);
+            _user.Name = userViewModel.Name;
+            _user.Email = userViewModel.Email;
+            _user.Password = authService.EncryptPassword(userViewModel.Password);
+            _user.DateUpdated = DateTime.UtcNow;
+            //_user = mapper.Map<User>(userViewModel);
 
             this.userRepository.Update(_user);
 

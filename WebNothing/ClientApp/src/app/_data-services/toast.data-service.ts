@@ -4,8 +4,8 @@ import { Injectable } from '@angular/core';
 export class ToastService {
   toasts: any[] = [];
 
-  show(header: string, body: string) {
-    this.toasts.push({ header, body });
+  show(header: string, body: string, className: string) {
+    this.toasts.push({ header, body, className });
   }
 
   remove(toast) {

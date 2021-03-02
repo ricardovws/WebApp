@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
@@ -15,6 +15,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ModalComponent } from './modal/modal.component';
 import { ToastComponent } from './toast/toast.component';
 import { ToastService } from './_data-services/toast.data-service';
+import { ErrorHandlerService } from './_data-services/errorHandler';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,7 @@ import { ToastService } from './_data-services/toast.data-service';
     Interceptor,
     NgbModule
   ],
-  providers: [UserDataService, AuthDataService, ToastService],
+  providers: [UserDataService, AuthDataService, ToastService, ErrorHandlerService],
   bootstrap: [AppComponent],
   entryComponents: [ModalComponent]
 })

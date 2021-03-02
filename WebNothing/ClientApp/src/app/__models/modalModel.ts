@@ -1,5 +1,3 @@
-import { userModel } from "./userModel";
-
 export class modalModel {
   action: string;
    

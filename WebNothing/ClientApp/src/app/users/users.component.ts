@@ -2,11 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { UserDataService } from '../_data-services/user.data-service';
 import { AuthDataService } from '../_data-services/auth.data-service';
 import { userLoggedData } from '../__models/userLoggedData';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ModalComponent } from '../modal/modal.component';
 import { modalModel } from '../__models/modalModel';
 import { userModel } from '../__models/userModel';
 import { ToastService } from '../_data-services/toast.data-service';
+import { ErrorHandlerService } from '../_data-services/errorHandler';
+import { errorMessage } from '../__models/errorMessage';
 
 @Component({
   selector: 'app-users',
@@ -26,11 +28,14 @@ export class UsersComponent implements OnInit {
 
   modalContent: modalModel;
 
+  modalRef: NgbModalRef;
+
   showToast: boolean;
   
   constructor(private userDataService: UserDataService, private authDataService: AuthDataService,
     private modalService: NgbModal,
-    private toastService: ToastService){
+    private toastService: ToastService,
+    private errorHandlerService: ErrorHandlerService) {
 
     this.model = new userLoggedData();
   }
@@ -42,14 +47,12 @@ export class UsersComponent implements OnInit {
     this.get();
   }
 
-  showStandard() {
-    this.toastService.show("litte test", "it's just a little test :)");
-  }
-
   onEdit(user) {
     this.modalContent = new modalModel(
       'Edit'
     );
+
+    user = new userModel(user.id, user.name, user.email, user.password);
 
     this.buildModalContent(this.modalContent, user).componentInstance.passEntry.subscribe((receivedEntry) => {
       this.user = new userModel(receivedEntry.id, receivedEntry.name, receivedEntry.email,
@@ -67,10 +70,16 @@ export class UsersComponent implements OnInit {
     });
   }
 
-  private buildModalContent(modalContent: modalModel, user: userModel) {
+  private buildModalContent(modalContent: modalModel, user: userModel, errorMessages?: any) {
     const modalRef = this.modalService.open(ModalComponent, { centered: true });
     modalRef.componentInstance.action = modalContent.action;
     modalRef.componentInstance.model = user;
+    this.modalRef = modalRef;
+
+    //Add message errors
+    if (errorMessages != null) {
+      this.modalRef = this.errorHandlerService.addErrors(modalRef, errorMessages);
+    }
     return modalRef;
   }
 
@@ -113,19 +122,40 @@ export class UsersComponent implements OnInit {
     })
   }
 
+
   put() {
     this.userDataService.put(this.user).subscribe((data: userModel) => {
       if (data) {
-        alert('The user has been updated!');
+        this.toastService.show("", this.user.name + " has been updated!", "bg-success text-light");
         this.get();
         this.user = null;
+
+        setTimeout(() => {
+          this.modalService.dismissAll();
+        }, 500)
+
         //this.user = {};
       } else {
+        debugger;
         alert('Error! This user cannot be updated!');
       }
     }, error => {
-      console.log(error);
-      alert('internal error!');
+        
+        var errorMessages = error.error.errors;
+        this.toastService.show("Error!", errorMessages.Password, "bg-danger text-light");
+
+        this.modalService.dismissAll();
+
+        setTimeout(() => {
+
+          this.buildModalContent(this.modalContent, this.user, errorMessages).componentInstance.passEntry.subscribe((receivedEntry) => {
+            this.user = new userModel(receivedEntry.id, receivedEntry.name, receivedEntry.email,
+              receivedEntry.password);
+            this.put();
+          });
+
+        }, 50)
+
     })
   }
 
@@ -133,16 +163,16 @@ export class UsersComponent implements OnInit {
   delete(user) {
     this.userDataService.delete(user.id).subscribe((data: userModel) => {
       if (data) {
-        alert('The user has been deleted!');
+        this.toastService.show("", user.name + " has been deleted!", "bg-success text-light");
         this.get();
         this.user = null;
         //this.user = {};
       } else {
-        alert('Error! This user cannot be deleted!');
+        this.toastService.show("", "Error! This user cannot be deleted!", "bg-warning text-light");
       }
     }, error => {
       console.log(error);
-      alert('internal error!');
+      this.toastService.show("Error!", "Something went wrong! Check your console!", "bg-warning text-light");
     })
   }
 
