@@ -11,7 +11,7 @@ export class userModel {
   emailError: errorMessage;
   passwordError: errorMessage;
 
-
+  
   constructor(id: number, name: string, email: string,
     password: string) {
     this.id = id;

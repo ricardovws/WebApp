@@ -27,6 +27,11 @@ export class ModalComponent {
     }    
   }
 
+  isAddModal() {
+    if (this.action == 'Add')
+      return true;
+  }
+
   isEditModal() {
     if (this.action == 'Edit')
       return true;

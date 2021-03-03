@@ -47,6 +47,20 @@ export class UsersComponent implements OnInit {
     this.get();
   }
 
+  addUser() {
+    this.modalContent = new modalModel(
+      'Add'
+    );
+
+    var user = new userModel(0, null, null, null);
+
+    this.buildModalContent(this.modalContent, user).componentInstance.passEntry.subscribe((receivedEntry) => {
+      this.user = new userModel(0, receivedEntry.name, receivedEntry.email,
+        receivedEntry.password);
+      this.post();
+    })
+  }
+
   onEdit(user) {
     this.modalContent = new modalModel(
       'Edit'

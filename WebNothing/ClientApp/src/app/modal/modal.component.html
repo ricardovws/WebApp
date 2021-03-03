@@ -1,4 +1,5 @@
 <div class="modal-header">
+  <h4 *ngIf="isAddModal()" class="modal-title"><strong>{{action}}</strong> user</h4>
   <h4 *ngIf="isEditModal()" class="modal-title"><strong>{{action}}</strong> user</h4>
   <h4 *ngIf="isDeleteModal()" class="modal-title"><strong>{{action}}</strong> user</h4>
   <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
@@ -8,8 +9,8 @@
 <div class="modal-body">
   <p *ngIf="isDeleteModal()">Would you really like to delete <strong>{{model.name}}</strong>?</p>
 
-  <div *ngIf="isEditModal()">
-    <p>Would you really like to edit <strong>{{model.name}}</strong>?</p>
+  <div *ngIf="isEditModal() || isAddModal()">
+    <p *ngIf="isEditModal()">Would you really like to edit <strong>{{model.name}}</strong>?</p>
     <form>
       <div class="mb-3 w-50">
         <label for="exampleInputName" class="form-label">Name:</label>
@@ -37,7 +38,8 @@
 </div>
 
 <div class="modal-footer">
-  <button *ngIf="isDeleteModal()" type="button" class="btn btn-danger" (click)="passBack(model)">Delete</button>
+  <button *ngIf="isAddModal()" type="button" class="btn btn-info" (click)="passBack(model)">Add</button>
   <button *ngIf="isEditModal()" type="button" class="btn btn-info" (click)="passBack(model)">Save</button>
+  <button *ngIf="isDeleteModal()" type="button" class="btn btn-danger" (click)="passBack(model)">Delete</button>
   <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
 </div>
