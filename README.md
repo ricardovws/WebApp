@@ -2,6 +2,17 @@
 A simple web application using Angular 10 and .NET 3.1
 
 
+## O que ainda precisa ser feito?
+[] Verificar email utilizado, senha confirmada
+[] Paginação, modo de exibição
+[] Implementar toda a parte de roles/permissões específicas
+[] Criar usuário antes de logar
+[] ...testes, trocar db e toda parte de devops...
+
+
+
+### Comandos úteis:
+
 Criar componente no Angular:
 
 Ir até a pasta "app" com o powershell e digitar:
