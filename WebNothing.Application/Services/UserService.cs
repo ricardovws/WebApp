@@ -55,9 +55,7 @@ namespace WebNothing.Application.Services
 
                 return true;
             } else
-            {
                 return false;
-            }
 
             
         }
@@ -82,7 +80,13 @@ namespace WebNothing.Application.Services
 
             _user.Name = userViewModel.Name;
             _user.Email = userViewModel.Email;
-            _user.Password = authService.EncryptPassword(userViewModel.Password);
+            
+            //if(userViewModel.Password != null && userViewModel.ConfirmPassword != null)
+            //{
+            //    if (userViewModel.Password == userViewModel.ConfirmPassword)
+            //        _user.Password = authService.EncryptPassword(userViewModel.Password);
+            //}
+                
             _user.DateUpdated = DateTime.UtcNow;
             //_user = mapper.Map<User>(userViewModel);
 
