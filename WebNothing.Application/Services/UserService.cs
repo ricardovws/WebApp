@@ -45,13 +45,21 @@ namespace WebNothing.Application.Services
 
             User _user = mapper.Map<User>(userViewModel);
 
-            _user.DateCreated = DateTime.UtcNow;
+            if (userViewModel.Password == userViewModel.ConfirmPassword)
+            {
+                _user.DateCreated = DateTime.UtcNow;
 
-            _user.Password = authService.EncryptPassword(_user.Password);
+                _user.Password = authService.EncryptPassword(_user.Password);
 
-            this.userRepository.Create(_user);
+                this.userRepository.Create(_user);
 
-            return true;
+                return true;
+            } else
+            {
+                return false;
+            }
+
+            
         }
 
         public UserViewModel GetById(int id)

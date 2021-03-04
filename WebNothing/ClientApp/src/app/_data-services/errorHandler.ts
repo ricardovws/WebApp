@@ -19,6 +19,9 @@ export class ErrorHandlerService {
           case 'Password':
             modalRef.componentInstance.model.passwordError = error;
             break;
+          case 'ConfirmPassword':
+            modalRef.componentInstance.model.confirmPasswordError = error;
+            break;
         }
       }
     }

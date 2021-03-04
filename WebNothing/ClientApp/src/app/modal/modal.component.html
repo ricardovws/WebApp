@@ -26,12 +26,11 @@
         <label for="exampleInputPassword" class="form-label">Password:</label>
         <input type="password" class="form-control {{model.passwordError?.errorTarget}}" id="exampleInputPassword" placeholder="Password" [(ngModel)]="model.password" name="password">
         <div class="invalid-feedback">{{model.passwordError?.errorDescription}}</div>
-
-
-        <!--<input type="password" class="form-control is-invalid" id="exampleInputPassword" placeholder="Password" [(ngModel)]="model.password" name="password">
-        <div class="invalid-feedback">Sorry, that username's taken. Try another?</div>-->
-
-
+      </div>
+      <div class="mb-3 w-50">
+        <label for="exampleInputConfirmPassword" class="form-label">Confirm Password:</label>
+        <input type="password" class="form-control {{model.confirmPasswordError?.errorTarget}}" id="exampleInputConfirmPassword" placeholder="Confirm Password" [(ngModel)]="model.confirmPassword" name="password">
+        <div class="invalid-feedback">{{model.confirmPasswordError?.errorDescription}}</div>
       </div>
     </form>
   </div>

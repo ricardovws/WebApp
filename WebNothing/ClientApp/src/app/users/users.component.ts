@@ -52,11 +52,11 @@ export class UsersComponent implements OnInit {
       'Add'
     );
 
-    var user = new userModel(0, null, null, null);
+    var user = new userModel(0, null, null, null, null);
 
     this.buildModalContent(this.modalContent, user).componentInstance.passEntry.subscribe((receivedEntry) => {
       this.user = new userModel(0, receivedEntry.name, receivedEntry.email,
-        receivedEntry.password);
+        receivedEntry.password, receivedEntry.confirmPassword);
       this.post();
     })
   }
@@ -66,11 +66,11 @@ export class UsersComponent implements OnInit {
       'Edit'
     );
 
-    user = new userModel(user.id, user.name, user.email, user.password);
+    user = new userModel(user.id, user.name, user.email, user.password, user.confirmPassword);
 
     this.buildModalContent(this.modalContent, user).componentInstance.passEntry.subscribe((receivedEntry) => {
       this.user = new userModel(receivedEntry.id, receivedEntry.name, receivedEntry.email,
-        receivedEntry.password);
+        receivedEntry.password, receivedEntry.confirmPassword);
       this.put();
     });
   }
@@ -131,8 +131,22 @@ export class UsersComponent implements OnInit {
         alert('Error! This user cannot be registered!');
       }
     }, error => {
-      console.log(error);
-      alert('internal error!');
+        console.log(error);
+
+        var errorMessages = error.error.errors;
+        this.toastService.show("Error!", errorMessages.Password, "bg-danger text-light");
+
+        this.modalService.dismissAll();
+
+        setTimeout(() => {
+
+          this.buildModalContent(this.modalContent, this.user, errorMessages).componentInstance.passEntry.subscribe((receivedEntry) => {
+            this.user = new userModel(receivedEntry.id, receivedEntry.name, receivedEntry.email,
+              receivedEntry.password, receivedEntry.confirmPassword);
+            //this.post();
+          });
+
+        }, 50)
     })
   }
 
@@ -164,7 +178,7 @@ export class UsersComponent implements OnInit {
 
           this.buildModalContent(this.modalContent, this.user, errorMessages).componentInstance.passEntry.subscribe((receivedEntry) => {
             this.user = new userModel(receivedEntry.id, receivedEntry.name, receivedEntry.email,
-              receivedEntry.password);
+              receivedEntry.password, receivedEntry.confirmPassword);
             this.put();
           });
 
