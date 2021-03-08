@@ -9,7 +9,7 @@ A simple web application using Angular 10 and .NET 3.1
 
 [ ] Implementar toda a parte de roles/permissões específicas
 
-[ ] Criar usuário antes de logar
+[ ] Criar usuário antes de logar, melhorar sistema de auth. Utilizar pacote jwt_decode no frontned!
 
 [ ] Dar uma melhoradinha no visual, utilizando bootstrap :)
 
