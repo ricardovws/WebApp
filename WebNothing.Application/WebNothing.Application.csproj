@@ -7,10 +7,12 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\WebNothing.Auth\WebNothing.Auth.csproj" />
+    <ProjectReference Include="..\WebNothing.Data\WebNothing.Data.csproj" />
     <ProjectReference Include="..\WebNothing.Domain\WebNothing.Domain.csproj" />
   </ItemGroup>
 

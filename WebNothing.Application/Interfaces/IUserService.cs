@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using WebNothing.Application.ViewModels;
 
 namespace WebNothing.Application.Interfaces
@@ -8,7 +10,7 @@ namespace WebNothing.Application.Interfaces
     public interface IUserService
     {
         List<UserViewModel> Get();
-        bool Post(UserViewModel userViewModel);
+        string Post(UserViewModel userViewModel);
         UserViewModel GetById(int id);
         bool Put(UserViewModel userViewModel);
 

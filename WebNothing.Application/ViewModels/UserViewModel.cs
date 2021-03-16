@@ -7,13 +7,13 @@ namespace WebNothing.Application.ViewModels
 {
     public class UserViewModel : EntityViewModel
     {
-        [Required]
+        //[Required]
         public string Name { get; set; }
-        [Required]
+        //[Required]
         public string Email { get; set; }
-        [Required]
+        //[Required]
         public string Password { get; set; }
-        [Required]
+        //[Required]
         public string ConfirmPassword { get; set; }
     }
 }

@@ -123,7 +123,7 @@ export class UsersComponent implements OnInit {
   post() {
     this.userDataService.post(this.user).subscribe((data: userModel) => {
       if (data) {
-        alert('The user has been registered!');
+        this.toastService.show("", this.user.name + " has been registered!", "bg-success text-light");
         this.get();
         this.user = null;
         //this.user = {};
@@ -143,7 +143,7 @@ export class UsersComponent implements OnInit {
           this.buildModalContent(this.modalContent, this.user, errorMessages).componentInstance.passEntry.subscribe((receivedEntry) => {
             this.user = new userModel(receivedEntry.id, receivedEntry.name, receivedEntry.email,
               receivedEntry.password, receivedEntry.confirmPassword);
-            //this.post();
+            this.post();
           });
 
         }, 50)

@@ -1,15 +1,21 @@
 ﻿using AutoMapper;
+using FluentValidation.Results;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 using WebNothing.Application.Interfaces;
 using WebNothing.Application.ViewModels;
 using WebNothing.Auth.Services;
+using WebNothing.Data.Validators;
+using WebNothing.Data.Validators.ErrorMessage;
 using WebNothing.Domain.Entities;
 using WebNothing.Domain.Interfaces;
-using ValidationContext = System.ComponentModel.DataAnnotations.ValidationContext;
+//using ValidationContext = System.ComponentModel.DataAnnotations.ValidationContext;
 
 namespace WebNothing.Application.Services
 {
@@ -35,28 +41,38 @@ namespace WebNothing.Application.Services
             return _userViewModels;
         }
 
-        public bool Post(UserViewModel userViewModel)
+        public string Post(UserViewModel userViewModel)
         {
 
-            if (userViewModel.Id != 0)
-                throw new Exception("UserID must be zero or empty");
+            //Validate all data
+            var errorList = new ErrorMessage();
 
-            Validator.ValidateObject(userViewModel, new ValidationContext(userViewModel), true);
+            if(userViewModel.Password != userViewModel.ConfirmPassword)
+            {
+                errorList.Errors.Add("Both passwords must match!");
+            }
 
             User _user = mapper.Map<User>(userViewModel);
-
-            if (userViewModel.Password == userViewModel.ConfirmPassword)
+            UserValidator validator = new UserValidator();
+            ValidationResult results = validator.Validate(_user);
+            
+            if (results.IsValid == false)
             {
-                _user.DateCreated = DateTime.UtcNow;
+                foreach(ValidationFailure failure in results.Errors)
+                {
+                    errorList.Errors.Insert(0, $"{failure.ErrorMessage}");
+                }
+                
+                return JsonConvert.SerializeObject(errorList);
+            }
 
-                _user.Password = authService.EncryptPassword(_user.Password);
+            _user.DateCreated = DateTime.UtcNow;
 
-                this.userRepository.Create(_user);
+            _user.Password = authService.EncryptPassword(_user.Password);
 
-                return true;
-            } else
-                return false;
+            this.userRepository.Create(_user);
 
+            return JsonConvert.SerializeObject("That's nice. The user has been added succesfully.");
             
         }
 
