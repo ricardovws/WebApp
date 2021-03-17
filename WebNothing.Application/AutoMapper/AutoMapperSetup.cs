@@ -13,7 +13,9 @@ namespace WebNothing.Application.AutoMapper
         {
             #region ViewModelToDomain
 
-            CreateMap<UserViewModel, User>();
+            CreateMap<UserViewModel, User>()
+                //ignore id!
+                .ForMember(dest => dest.Id, act => act.Ignore());
 
             #endregion
 

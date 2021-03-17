@@ -45,25 +45,35 @@ namespace WebNothing.Application.Services
         {
 
             //Validate all data
-            var errorList = new ErrorMessage();
+            //var errorList = new ErrorMessage();
 
-            if(userViewModel.Password != userViewModel.ConfirmPassword)
-            {
-                errorList.Errors.Add("Both passwords must match!");
-            }
+            //if(userViewModel.Password != userViewModel.ConfirmPassword)
+            //{
+            //    errorList.Errors.Add("Both passwords must match!");
+            //}
+
+            //User _user = mapper.Map<User>(userViewModel);
+            //UserValidator validator = new UserValidator();
+            //ValidationResult results = validator.Validate(_user);
+
+            //if (results.IsValid == false)
+            //{
+            //    foreach(ValidationFailure failure in results.Errors)
+            //    {
+            //        errorList.Errors.Insert(0, $"{failure.ErrorMessage}");
+            //    }
+
+            //    return JsonConvert.SerializeObject(errorList);
+            //}
 
             User _user = mapper.Map<User>(userViewModel);
-            UserValidator validator = new UserValidator();
-            ValidationResult results = validator.Validate(_user);
-            
-            if (results.IsValid == false)
+
+            var errors = new ErrorMessageBuilder().IsItOk(_user, userViewModel.ConfirmPassword).Errors;
+
+
+            if (errors.Any())
             {
-                foreach(ValidationFailure failure in results.Errors)
-                {
-                    errorList.Errors.Insert(0, $"{failure.ErrorMessage}");
-                }
-                
-                return JsonConvert.SerializeObject(errorList);
+                return JsonConvert.SerializeObject(errors);
             }
 
             _user.DateCreated = DateTime.UtcNow;
