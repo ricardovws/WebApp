@@ -19,20 +19,23 @@ namespace WebNothing.Data.Validators.ErrorMessage
             Results = null;
         }
 
-        public ErrorMessage IsItOk(User user, string confirmPassword)
+        public ErrorMessage IsItOk(User user, string confirmPassword, bool ignorePasswordUpdate = false)
         {
-            if (user.Password != confirmPassword)
-                ErrorMessage.Errors.Add("Both passwords must match!");
-
             Results = Validator.Validate(user);
 
             if (Results.IsValid == false)
             {
                 foreach (ValidationFailure failure in Results.Errors)
                 {
-                    ErrorMessage.Errors.Insert(0, $"{failure.ErrorMessage}");
+                    if (!(ignorePasswordUpdate && failure.PropertyName == "Password"))
+                    {
+                        ErrorMessage.Errors.Add($"{failure.ErrorMessage}");
+                    }
                 }
             }
+
+            if (user.Password != confirmPassword)
+                ErrorMessage.Errors.Add("Both passwords must match!");
 
             return ErrorMessage;
         }

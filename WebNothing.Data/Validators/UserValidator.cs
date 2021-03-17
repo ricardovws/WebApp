@@ -10,9 +10,11 @@ namespace WebNothing.Data.Validators
     {
         public UserValidator()
         {
+            RuleFor(u => u).NotNull();
             RuleFor(u => u.Name).NotEmpty();
             RuleFor(u => u.Email).NotEmpty();
             RuleFor(u => u.Password).NotEmpty();
+            
         }
     }
 }

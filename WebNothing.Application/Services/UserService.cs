@@ -44,32 +44,9 @@ namespace WebNothing.Application.Services
         public string Post(UserViewModel userViewModel)
         {
 
-            //Validate all data
-            //var errorList = new ErrorMessage();
-
-            //if(userViewModel.Password != userViewModel.ConfirmPassword)
-            //{
-            //    errorList.Errors.Add("Both passwords must match!");
-            //}
-
-            //User _user = mapper.Map<User>(userViewModel);
-            //UserValidator validator = new UserValidator();
-            //ValidationResult results = validator.Validate(_user);
-
-            //if (results.IsValid == false)
-            //{
-            //    foreach(ValidationFailure failure in results.Errors)
-            //    {
-            //        errorList.Errors.Insert(0, $"{failure.ErrorMessage}");
-            //    }
-
-            //    return JsonConvert.SerializeObject(errorList);
-            //}
-
             User _user = mapper.Map<User>(userViewModel);
 
             var errors = new ErrorMessageBuilder().IsItOk(_user, userViewModel.ConfirmPassword).Errors;
-
 
             if (errors.Any())
             {
@@ -97,28 +74,39 @@ namespace WebNothing.Application.Services
             return mapper.Map<UserViewModel>(_user);
         }
 
-        public bool Put(UserViewModel userViewModel)
+        public string Put(UserViewModel userViewModel)
         {
-            User _user = this.userRepository.Find(x => x.Id == userViewModel.Id && !x.IsDeleted);
+            User _user = mapper.Map<User>(userViewModel);
 
-            if (_user == null)
-                throw new Exception("User not found");
+            User user = this.userRepository.Find(x => x.Id == userViewModel.Id && !x.IsDeleted);
 
-            _user.Name = userViewModel.Name;
-            _user.Email = userViewModel.Email;
-            
-            //if(userViewModel.Password != null && userViewModel.ConfirmPassword != null)
-            //{
-            //    if (userViewModel.Password == userViewModel.ConfirmPassword)
-            //        _user.Password = authService.EncryptPassword(userViewModel.Password);
-            //}
-                
-            _user.DateUpdated = DateTime.UtcNow;
-            //_user = mapper.Map<User>(userViewModel);
+            if (user is null)
+            {
+                return JsonConvert.SerializeObject("User not found.");
+            }
 
-            this.userRepository.Update(_user);
+            bool ignorePasswordUpdate = false;
 
-            return true;
+            if (string.IsNullOrEmpty(userViewModel.Password) && userViewModel.Password == userViewModel.ConfirmPassword)
+            {
+                ignorePasswordUpdate = true;
+            }
+
+            var errors = new ErrorMessageBuilder().IsItOk(_user, userViewModel.ConfirmPassword, ignorePasswordUpdate).Errors;
+
+            if (errors.Any())
+            {
+                return JsonConvert.SerializeObject(errors);
+            }
+
+            user.Name = userViewModel.Name;
+            user.Email = userViewModel.Email;                
+            user.DateUpdated = DateTime.UtcNow;
+            user.Password = userViewModel.Password;
+
+            this.userRepository.Update(user);
+
+            return JsonConvert.SerializeObject("That's nice. The user has been updated succesfully.");
         }
 
         public bool Delete(int id)
