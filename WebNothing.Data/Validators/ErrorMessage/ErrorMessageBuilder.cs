@@ -8,18 +8,18 @@ namespace WebNothing.Data.Validators.ErrorMessage
 {
     public class ErrorMessageBuilder
     {
-        public ErrorMessage ErrorMessage { get; set; }
+        public List<ErrorMessage> ErrorMessage { get; set; }
         public UserValidator Validator { get; set; }
         public ValidationResult Results { get; set; }
 
         public ErrorMessageBuilder()
         {
-            ErrorMessage = new ErrorMessage();
+            ErrorMessage = new List<ErrorMessage>();
             Validator = new UserValidator();
             Results = null;
         }
 
-        public ErrorMessage IsItOk(User user, string confirmPassword, bool ignorePasswordUpdate = false)
+        public List<ErrorMessage> IsItOk(User user, string confirmPassword, bool ignorePasswordUpdate = false)
         {
             Results = Validator.Validate(user);
 
@@ -29,13 +29,15 @@ namespace WebNothing.Data.Validators.ErrorMessage
                 {
                     if (!(ignorePasswordUpdate && failure.PropertyName == "Password"))
                     {
-                        ErrorMessage.Errors.Add($"{failure.ErrorMessage}");
+                        //ErrorMessage.Add($"{failure.ErrorMessage}");
+                        ErrorMessage.Add(new ErrorMessage(failure.PropertyName, failure.ErrorMessage));
                     }
                 }
             }
 
             if (user.Password != confirmPassword)
-                ErrorMessage.Errors.Add("Both passwords must match!");
+                //ErrorMessage.Add("Both passwords must match!");
+                ErrorMessage.Add(new ErrorMessage("ConfirmPassword", "Both passwords must match!"));
 
             return ErrorMessage;
         }

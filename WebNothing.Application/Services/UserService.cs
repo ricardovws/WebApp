@@ -46,7 +46,7 @@ namespace WebNothing.Application.Services
 
             User _user = mapper.Map<User>(userViewModel);
 
-            var errors = new ErrorMessageBuilder().IsItOk(_user, userViewModel.ConfirmPassword).Errors;
+            var errors = new ErrorMessageBuilder().IsItOk(_user, userViewModel.ConfirmPassword);
 
             if (errors.Any())
             {
@@ -92,7 +92,7 @@ namespace WebNothing.Application.Services
                 ignorePasswordUpdate = true;
             }
 
-            var errors = new ErrorMessageBuilder().IsItOk(_user, userViewModel.ConfirmPassword, ignorePasswordUpdate).Errors;
+            var errors = new ErrorMessageBuilder().IsItOk(_user, userViewModel.ConfirmPassword, ignorePasswordUpdate);
 
             if (errors.Any())
             {

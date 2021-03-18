@@ -6,6 +6,13 @@ namespace WebNothing.Data.Validators.ErrorMessage
 {
     public class ErrorMessage
     {
-        public List<string> Errors { get; set; } = new List<string>();
+        public string Name { get; set; }
+        public string Message { get; set; }
+
+        public ErrorMessage(string name, string message)
+        {
+            Name = name;
+            Message = message;
+        }
     }
 }
