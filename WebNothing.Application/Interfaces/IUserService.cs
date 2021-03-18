@@ -13,7 +13,6 @@ namespace WebNothing.Application.Interfaces
         string Post(UserViewModel userViewModel);
         UserViewModel GetById(int id);
         string Put(UserViewModel userViewModel);
-
-        public bool Delete(int id);
+        string Delete(int id);
     }   
 }

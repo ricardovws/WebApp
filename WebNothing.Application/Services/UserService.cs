@@ -109,14 +109,18 @@ namespace WebNothing.Application.Services
             return JsonConvert.SerializeObject("That's nice. The user has been updated succesfully.");
         }
 
-        public bool Delete(int id)
+        public string Delete(int id)
         {
             User _user = this.userRepository.Find(x => x.Id == id && !x.IsDeleted);
 
-            if (_user == null)
-                throw new Exception("User not found");
+            if (_user is null)
+            {
+                return JsonConvert.SerializeObject("User not found.");
+            }
 
-            return this.userRepository.Delete(_user); 
+            this.userRepository.Delete(_user);
+
+            return JsonConvert.SerializeObject("The user has been deleted.");
         }
     }
 }

@@ -123,6 +123,7 @@ export class UsersComponent implements OnInit {
   post() {
     this.userDataService.post(this.user).subscribe((data: userModel) => {
       if (data) {
+        debugger;
         this.toastService.show("", this.user.name + " has been registered!", "bg-success text-light");
         this.get();
         this.user = null;

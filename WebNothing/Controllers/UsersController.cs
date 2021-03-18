@@ -56,7 +56,7 @@ namespace WebNothing.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "fullAdmin")]
+        [Authorize(Roles = "fullAdmin"), AllowAnonymous]
         public IActionResult Delete(int id)
         {
             //int _userId = int.Parse(TokenService.GetValueFromClaim(HttpContext.User.Identity, ClaimTypes.Email));
