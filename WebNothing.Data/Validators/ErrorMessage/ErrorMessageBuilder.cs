@@ -36,7 +36,6 @@ namespace WebNothing.Data.Validators.ErrorMessage
             }
 
             if (user.Password != confirmPassword)
-                //ErrorMessage.Add("Both passwords must match!");
                 ErrorMessage.Add(new ErrorMessage("ConfirmPassword", "Both passwords must match!"));
 
             return ErrorMessage;

@@ -7,9 +7,9 @@ export class ErrorHandlerService {
   addErrors(modalRef: any, errorMessages: any) {
     for (var e in errorMessages) {
       if (e != undefined) {
-        var error = new errorMessage(e, errorMessages[e])
-
-        switch (e) {
+        debugger;
+        var error = new errorMessage(errorMessages[e].Name, errorMessages[e].Message)
+        switch (errorMessages[e].Name) {
           case 'Name':
             modalRef.componentInstance.model.nameError = error;
             break;
@@ -25,8 +25,6 @@ export class ErrorHandlerService {
         }
       }
     }
-
     return modalRef;
-
   }
 }

@@ -29,7 +29,7 @@
       </div>
       <div class="mb-3 w-50">
         <label for="exampleInputConfirmPassword" class="form-label">Confirm Password:</label>
-        <input type="password" class="form-control {{model.confirmPasswordError?.errorTarget}}" id="exampleInputConfirmPassword" placeholder="Confirm Password" [(ngModel)]="model.confirmPassword" name="password">
+        <input type="password" class="form-control {{model.confirmPasswordError?.errorTarget}}" id="exampleInputConfirmPassword" placeholder="Confirm Password" [(ngModel)]="model.confirmPassword">
         <div class="invalid-feedback">{{model.confirmPasswordError?.errorDescription}}</div>
       </div>
     </form>

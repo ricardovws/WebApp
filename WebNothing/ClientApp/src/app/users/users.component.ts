@@ -8,7 +8,6 @@ import { modalModel } from '../__models/modalModel';
 import { userModel } from '../__models/userModel';
 import { ToastService } from '../_data-services/toast.data-service';
 import { ErrorHandlerService } from '../_data-services/errorHandler';
-import { errorMessage } from '../__models/errorMessage';
 
 @Component({
   selector: 'app-users',
@@ -121,33 +120,25 @@ export class UsersComponent implements OnInit {
 
 
   post() {
-    this.userDataService.post(this.user).subscribe((data: userModel) => {
-      if (data) {
-        debugger;
+    this.userDataService.post(this.user).subscribe((data: any) => {
+      debugger;
+      if (data.Errors == null) {
         this.toastService.show("", this.user.name + " has been registered!", "bg-success text-light");
         this.get();
         this.user = null;
-        //this.user = {};
       } else {
-        alert('Error! This user cannot be registered!');
-      }
-    }, error => {
-        console.log(error);
-
-        var errorMessages = error.error.errors;
-        this.toastService.show("Error!", errorMessages.Password, "bg-danger text-light");
-
         this.modalService.dismissAll();
-
         setTimeout(() => {
-
-          this.buildModalContent(this.modalContent, this.user, errorMessages).componentInstance.passEntry.subscribe((receivedEntry) => {
+          debugger;
+          this.buildModalContent(this.modalContent, this.user, data.Errors).componentInstance.passEntry.subscribe((receivedEntry) => {
             this.user = new userModel(receivedEntry.id, receivedEntry.name, receivedEntry.email,
               receivedEntry.password, receivedEntry.confirmPassword);
             this.post();
           });
-
         }, 50)
+      }
+    }, error => {
+        console.log(error);
     })
   }
 

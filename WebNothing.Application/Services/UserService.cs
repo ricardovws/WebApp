@@ -50,7 +50,10 @@ namespace WebNothing.Application.Services
 
             if (errors.Any())
             {
-                return JsonConvert.SerializeObject(errors);
+                var errorsList = new ErrorMessage();
+                errorsList.Errors = errors;
+                
+                return JsonConvert.SerializeObject(errorsList);
             }
 
             _user.DateCreated = DateTime.UtcNow;
